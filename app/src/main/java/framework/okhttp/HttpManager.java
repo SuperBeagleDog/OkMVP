@@ -1,11 +1,11 @@
-package com.lyf.okmvp.okhttp;
+package framework.okhttp;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.ArrayMap;
 
-import com.lyf.okmvp.okhttp.interfaces.Callback;
-import com.lyf.okmvp.okhttp.interfaces.IRequestMethods;
+import framework.okhttp.interfaces.Callback;
+import framework.okhttp.interfaces.IRequestMethods;
 
 /**
  * @Author Lyf

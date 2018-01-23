@@ -1,9 +1,9 @@
-package com.lyf.okmvp.mvp.model;
+package framework.mvp.presenter;
 
 /**
  * @Author Lyf
  * @CreateTime 2018/1/23
  * @Description
  **/
-public class ModelManger {
+public class PresenterManager {
 }

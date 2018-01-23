@@ -1,4 +1,4 @@
-package com.lyf.okmvp.okhttp.interfaces;
+package framework.okhttp.interfaces;
 
 import okhttp3.OkHttpClient;
 

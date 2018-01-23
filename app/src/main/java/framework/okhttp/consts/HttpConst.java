@@ -1,4 +1,4 @@
-package com.lyf.okmvp.okhttp.consts;
+package framework.okhttp.consts;
 
 /**
  * @Author Lyf

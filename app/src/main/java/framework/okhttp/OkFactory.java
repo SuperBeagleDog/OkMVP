@@ -1,4 +1,4 @@
-package com.lyf.okmvp.okhttp;
+package framework.okhttp;
 
 
 import java.util.concurrent.TimeUnit;

@@ -1,4 +1,4 @@
-package com.lyf.okmvp.utils;
+package framework.utils;
 
 import android.support.annotation.NonNull;
 import android.util.ArrayMap;

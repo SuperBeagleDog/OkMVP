@@ -1,10 +1,9 @@
-package com.lyf.okmvp.mvp.model.get;
+package framework.mvp.model.get;
 
-import com.lyf.okmvp.bean.BaseMsg;
-import com.lyf.okmvp.okhttp.HttpManager;
-import com.lyf.okmvp.okhttp.consts.HttpConst;
-import com.lyf.okmvp.okhttp.interfaces.Callback;
-
+import framework.bean.BaseMsg;
+import framework.okhttp.HttpManager;
+import framework.okhttp.consts.HttpConst;
+import framework.okhttp.interfaces.Callback;
 import okhttp3.Call;
 import okhttp3.Response;
 

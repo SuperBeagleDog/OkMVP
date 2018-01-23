@@ -1,4 +1,4 @@
-package com.lyf.okmvp.utils;
+package framework.utils;
 
 import com.google.gson.Gson;
 import java.lang.reflect.Type;

@@ -1,4 +1,4 @@
-package com.lyf.okmvp.bean;
+package framework.bean;
 
 /**
  * @Author Lyf

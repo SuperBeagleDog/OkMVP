@@ -1,4 +1,4 @@
-package com.lyf.okmvp.okhttp.interfaces;
+package framework.okhttp.interfaces;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

@@ -1,6 +1,6 @@
-package com.lyf.okmvp.okhttp.header;
+package framework.okhttp.header;
 
-import com.lyf.okmvp.okhttp.consts.HeaderConst;
+import framework.okhttp.consts.HeaderConst;
 
 import okhttp3.Headers;
 
