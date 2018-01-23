@@ -12,39 +12,36 @@ public class HttpUtil {
 
 
     /**
-     * 组合Http Get请求URL
-     * @param url 请求的url
-     * @param paramMap 请求参数
-     * @return 返回拼装完参数的url
+     * Compose the params to url
+     *
+     * @param url      request url
+     * @param paramMap request params
+     * @return A url with params.
      */
     public static String composeParams(@NonNull String url, ArrayMap<String, Object> paramMap) {
 
-        // URL为空，抛出异常。
-        if(url == null){
-            throw new RuntimeException("url不能为null");
+        // URL is null, throw a RuntimeException.
+        if (url == null) {
+            throw new RuntimeException("url can't be null");
         }
 
-        // 参数为空，直接返回url。
+        // If the paramsMap is null or empty, return the url simply.
         if (paramMap == null || paramMap.size() == 0) {
-             return url;
+            return url;
         }
 
         StringBuilder parmasUrl = new StringBuilder();
 
-        if(!url.contains("?")){
+        if (!url.contains("?")) {
             parmasUrl.append("?");
         }
 
-        if (paramMap != null) {
+        for (String key : paramMap.keySet()) {
 
-            for (String key : paramMap.keySet()) {
-
-                if(paramMap.get(key) == null) {
-                    continue; // 如果值为null，跳过
-                }
-                parmasUrl.append("&" + paramMap.get(key));
+            if (paramMap.get(key) == null) {
+                continue; // the value is null, leave it.
             }
-
+            parmasUrl.append("&" + paramMap.get(key));
         }
 
         return url + parmasUrl.toString();

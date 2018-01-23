@@ -10,7 +10,7 @@ import com.lyf.okhttputils.okhttp.interfaces.IRequestMethods;
 /**
  * @Author Lyf
  * @CreateTime 2018/1/23
- * @Description HttpManager 用于转发网络请求
+ * @Description HttpManager for doing request, The real request doing in OkUtils.
  **/
 public class HttpManager implements IRequestMethods {
 

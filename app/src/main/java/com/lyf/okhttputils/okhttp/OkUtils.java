@@ -24,7 +24,7 @@ import okhttp3.Request;
 /**
  * @Author Lyf
  * @CreateTime 2018/1/22
- * @Description OkHttp的工具类
+ * @Description A util for doing request
  **/
 class OkUtils implements IBaseRequestMethods, IOkUtils {
 

@@ -11,13 +11,12 @@ import okhttp3.Response;
 /**
  * @Author Lyf
  * @CreateTime 2018/1/23
- * @Description 与app/相关的网络请求
+ * @Description Do some requests about app.
  **/
 public class GetAppRequest {
 
     /**
-     * 获取App的配置
-     * @param responseCallback 通过该回调，返回App的配置
+     * Get the setting of App
      */
     public static void getAppConfig(final Callback<BaseMsg> responseCallback) {
 

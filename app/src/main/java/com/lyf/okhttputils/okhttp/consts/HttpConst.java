@@ -3,16 +3,17 @@ package com.lyf.okhttputils.okhttp.consts;
 /**
  * @Author Lyf
  * @CreateTime 2018/1/22
- * @Description
+ * @Description Const of Http request
  **/
 public interface HttpConst {
 
+    // server url
     String SERVER_URL = "http://112.74.48.33:8018/";
 
-    // 一级服务器地址
+    // root address
     String APP = "app/";
 
-    // 完整的服务器地址
+    // Entirely request url
     String GET_APP_CONFIGS = SERVER_URL + APP + "configs";
 
 }
