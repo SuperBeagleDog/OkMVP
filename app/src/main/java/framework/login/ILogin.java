@@ -48,4 +48,13 @@ public interface ILogin {
      */
     <T> void onLoginWithPlatforms(@Nullable T loginInfo, boolean isSuccess);
 
+
+    /**
+     * login with unKnow params for compatibility.
+     * Note that : This method will not check the params whether is valid.
+     * So that you have to check the params whether is valid by yourself.
+     *
+     * @param params unKnow params. These params will do nothing for checking.
+     */
+    void onLoginWithUnKnowParams(String... params);
 }

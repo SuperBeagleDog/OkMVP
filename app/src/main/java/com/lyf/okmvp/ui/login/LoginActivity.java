@@ -34,7 +34,6 @@ public class LoginActivity extends BaseActivity {
     // fakes a login action.
     private void onLoginClick() {
 
-
         // pass params to presenter which will check the params, and do login request if the params is valid.
         mLoginPresenter.onLoginWithPassWord("phone", "132123456789",
                 "password", "*****");
