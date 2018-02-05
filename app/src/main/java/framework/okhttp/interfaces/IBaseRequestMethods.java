@@ -17,5 +17,7 @@ public interface IBaseRequestMethods {
      * @param responseCallback<T> 请求返回的结果，其中的T,是json对应的Bean类
      */
     <T> void doGet(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback);
-    
+
+    <T> void doPost(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback);
+
 }

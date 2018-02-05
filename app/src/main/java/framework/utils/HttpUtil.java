@@ -30,10 +30,10 @@ public class HttpUtil {
             return url;
         }
 
-        StringBuilder parmasUrl = new StringBuilder();
+        StringBuilder paramsUrl = new StringBuilder();
 
         if (!url.contains("?")) {
-            parmasUrl.append("?");
+            paramsUrl.append("?");
         }
 
         for (String key : paramMap.keySet()) {
@@ -41,10 +41,10 @@ public class HttpUtil {
             if (paramMap.get(key) == null) {
                 continue; // the value is null, leave it.
             }
-            parmasUrl.append("&" + paramMap.get(key));
+            paramsUrl.append("&" + paramMap.get(key));
         }
 
-        return url + parmasUrl.toString();
+        return url + paramsUrl.toString();
     }
 
 }

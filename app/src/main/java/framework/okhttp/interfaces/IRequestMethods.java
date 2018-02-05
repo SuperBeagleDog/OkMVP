@@ -20,6 +20,7 @@ public interface IRequestMethods extends IBaseRequestMethods {
      *
      */
     void doPost(Object tag, String url);
+    <T> void doPost(@NonNull String url, @Nullable Callback<T> responseCallback);
 
     /**
      *

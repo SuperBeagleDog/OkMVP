@@ -42,7 +42,17 @@ public class HttpManager implements IRequestMethods {
     }
 
     @Override
+    public <T> void doPost(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
+        OkUtils.getInstance().doPost(url, params, responseCallback);
+    }
+
+    @Override
     public void doPost(Object tag, String url) {
+
+    }
+
+    @Override
+    public <T> void doPost(@NonNull String url, @Nullable Callback<T> responseCallback) {
 
     }
 

@@ -13,7 +13,12 @@ public interface HttpConst {
     // root address
     String APP = "app/";
 
+    // root address
+    String LOGIN = "login/";
+
     // Entirely request url
     String GET_APP_CONFIGS = SERVER_URL + APP + "configs";
+
+    String POST_LOGIN_REQUEST = SERVER_URL + LOGIN + "phone";
 
 }

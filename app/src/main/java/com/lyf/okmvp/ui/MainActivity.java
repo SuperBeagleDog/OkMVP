@@ -1,6 +1,8 @@
 package com.lyf.okmvp.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+
 import com.lyf.okmvp.R;
 
 import framework.bean.BaseMsg;
@@ -27,7 +29,9 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+
     }
+
 
 
 }
