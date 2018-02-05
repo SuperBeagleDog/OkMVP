@@ -41,7 +41,7 @@ public class LoginActivity extends BaseActivity {
         // Clears the common checking if you need.
         // mLoginPresenter.clearAllInterceptors();
 
-        // add interceptor to filter the params before it is passed to server if you need.
+        // add interceptor to verify and filter the params before it is passed to server if you need.
 //        mLoginPresenter.addInterceptor(new ILoginInterceptor() {
 //            @Override
 //            public boolean checkLoginWithPassWord(@NonNull Application application,
