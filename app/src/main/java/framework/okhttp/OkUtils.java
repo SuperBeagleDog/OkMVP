@@ -93,6 +93,11 @@ class OkUtils implements IBaseRequestMethods, IOkUtils {
         });
     }
 
+    @Override
+    public <T> void doPost(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
+
+    }
+
 
     /**
      * Cancel a request by using tag If this request is still requesting or waiting for posting.
