@@ -2,7 +2,7 @@ package framework.mvp.model.get;
 
 import com.lyf.okmvp.http.HttpManager;
 
-import framework.bean.BaseMsg;
+import framework.bean.BaseBean;
 import framework.okhttp.consts.HttpConst;
 import framework.okhttp.interfaces.Callback;
 import okhttp3.Call;
@@ -18,10 +18,10 @@ public class GetAppRequest {
     /**
      * Get the setting of App
      */
-    public static void getAppConfig(final Callback<BaseMsg> responseCallback) {
+    public static void getAppConfig(final Callback<BaseBean> responseCallback) {
 
         HttpManager.getInstance().doGet(HttpConst.GET_APP_CONFIGS,
-                new Callback<BaseMsg>() {
+                new Callback<BaseBean>() {
                     @Override
                     public void onFailure(Call call, Exception e) {
 
@@ -31,7 +31,7 @@ public class GetAppRequest {
                     }
 
                     @Override
-                    public void onResponse(Call call, Response response, BaseMsg bean) {
+                    public void onResponse(Call call, Response response, BaseBean bean) {
 
                         if (responseCallback != null) {
                             responseCallback.onResponse(call, response, bean);

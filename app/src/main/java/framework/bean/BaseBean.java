@@ -5,10 +5,20 @@ package framework.bean;
  * @CreateTime 2018/1/22
  * @Description
  **/
-public class BaseMsg {
+public class BaseBean<T> {
 
     private int code;
     private String msg;
+
+    private T data;
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 
     public int getCode() {
         return code;
