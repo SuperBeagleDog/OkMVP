@@ -2,11 +2,11 @@ package com.lyf.okmvp.model.login;
 
 import android.util.ArrayMap;
 
+import com.lyf.okmvp.http.HttpManager;
+
 import framework.bean.BaseMsg;
-import framework.okhttp.HttpManager;
 import framework.okhttp.consts.HttpConst;
 import framework.okhttp.interfaces.Callback;
-import framework.utils.GsonTools;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -23,19 +23,14 @@ public class PostLoginRequest {
                 new Callback<BaseMsg>() {
                     @Override
                     public void onFailure(Call call, Exception e) {
-
-                        if (responseCallback != null) {
-                            responseCallback.onFailure(call, e);
-                        }
+                        // 请求失败回调
                     }
 
                     @Override
                     public void onResponse(Call call, Response response, BaseMsg bean) {
-
-                        if (responseCallback != null) {
-                            responseCallback.onResponse(call, response, bean);
-                        }
-
+                        // 请求成功回调.
+                        // 获取Bean类数据
+                        String msg = bean.getMsg();
                     }
                 });
 

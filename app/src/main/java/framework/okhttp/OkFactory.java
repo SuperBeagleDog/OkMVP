@@ -12,9 +12,9 @@ import okhttp3.OkHttpClient;
  **/
 class OkFactory {
 
-    private final static int CONNECT_TIMEOUT = 500;
-    private final static int READ_TIMEOUT = 500;
-    private final static int WRITE_TIMEOUT = 500;
+    private final static int CONNECT_TIMEOUT = 30 * 1000;
+    private final static int READ_TIMEOUT =  30 * 1000;
+    private final static int WRITE_TIMEOUT =  30 * 1000;
 
     // There is only an instance of OkHttpClient in this project.
     private static OkHttpClient OK_INSTANCE;

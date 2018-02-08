@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.ArrayMap;
 
-import framework.okhttp.header.HeaderManager;
+import framework.okhttp.header.BaseHeaderManager;
 import framework.okhttp.interfaces.Callback;
 import framework.okhttp.interfaces.IBaseRequestMethods;
 import framework.okhttp.interfaces.IOkUtils;
@@ -33,7 +33,7 @@ class OkUtils implements IBaseRequestMethods, IOkUtils {
     private static OkUtils INSTANCE;
 
     private OkUtils() {
-        this.mHeaders = HeaderManager.getHeaders();
+        this.mHeaders = BaseHeaderManager.getHeaderManager().getHeaders();
     }
 
     static OkUtils getInstance() {
@@ -62,35 +62,36 @@ class OkUtils implements IBaseRequestMethods, IOkUtils {
 
         // 异步请求网络
         getOkHttpClient()
-                .newCall(request).enqueue(new okhttp3.Callback() {
+                .newCall(request).
+                enqueue(new okhttp3.Callback() {
 
-            @Override
-            public void onResponse(Call call, okhttp3.Response response) {
+                    @Override
+                    public void onResponse(Call call, okhttp3.Response response) {
 
-                try {
-                    if (responseCallback != null && response.body() != null) {
+                        try {
+                            if (responseCallback != null && response.body() != null) {
 
-                        // 获取服务器返回的Json
-                        String json = response.body().string();
-                        // 将json转成Bean
-                        T bean = GsonTools.fromJson(json, (((ParameterizedType)
-                                (responseCallback.getClass().getGenericInterfaces())[0])
-                                .getActualTypeArguments()[0]));
-                        // 返回数据
-                        responseCallback.onResponse(call, response, bean);
+                                // 获取服务器返回的Json
+                                String json = response.body().string();
+                                // 将json转成Bean
+                                T bean = GsonTools.fromJson(json, (((ParameterizedType)
+                                        (responseCallback.getClass().getGenericInterfaces())[0])
+                                        .getActualTypeArguments()[0]));
+                                // 返回数据
+                                responseCallback.onResponse(call, response, bean);
+                            }
+                        } catch (Exception e) {
+                            responseCallback.onFailure(call, e);
+                            LogUtil.log(TAG, "Json转换失败=" + e.toString());
+                        }
                     }
-                } catch (Exception e) {
-                    responseCallback.onFailure(call, e);
-                    LogUtil.log(TAG, "Json转换失败=" + e.toString());
-                }
-            }
 
-            @Override
-            public void onFailure(Call call, IOException e) {
-                responseCallback.onFailure(call, e);
-            }
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        responseCallback.onFailure(call, e);
+                    }
 
-        });
+                });
     }
 
     @Override

@@ -8,6 +8,12 @@ import java.util.concurrent.Executors;
 
 import framework.thread.interfaces.ObserverListener;
 import framework.thread.interfaces.SubscribeListener;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @Author Lyf
@@ -16,98 +22,32 @@ import framework.thread.interfaces.SubscribeListener;
  **/
 public class ThreadManager {
 
-    private static ThreadManager INSTANCE = null;
-    private final static ExecutorService mThreadPool = Executors.newFixedThreadPool(2);
-
-    public void execute(final Runnable runnable) {
-        execute(runnable, null, android.os.Process.THREAD_PRIORITY_BACKGROUND);
-    }
-
-    public void execute(final Runnable runnable,
-                               final Runnable callbac) {
-        execute(runnable, callbac, android.os.Process.THREAD_PRIORITY_BACKGROUND);
-    }
-
-    public static ThreadManager getThreadManager() {
-
-        if (INSTANCE == null) {
-            INSTANCE = new ThreadManager();
-        }
-
-        return INSTANCE;
-    }
-
-    public <T> void execute(final SubscribeListener<T> subscribeListener, final ObserverListener<T> observerListener) {
-
-        final SubscribeBean<T> subThread = new SubscribeBean<>();
-
-        execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    subThread.setBean(subscribeListener.runOnSubThread());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }, new Runnable() {
-            @Override
-            public void run() {
-                observerListener.runOnUiThread(subThread.getBean());
-            }
-        });
-    }
-
-
     /**
-     * 将Runnable放入线程池执行
+     * This method is used to do something on two separately different threads(threads are called one after the other) in an async way.
+     * For instance, you can do some heavy cpu operations on subThread and then updates your views on UI thread.
      *
-     * @param runnable
-     * @param callback 回调到execute函数所运行的线程中
-     * @param priority android.os.Process中指定的线程优先级
+     * @param subscribeListener do something in subThread(non-ui thread)
+     * @param observerListener  do something in mainThread(ui thread)
+     * @param <T>               after do something in subThread,
+     *                          you may want to pass a T(bean) object as a result to ui thread to update views.
      */
-    public void execute(final Runnable runnable,
-                               final Runnable callback, final int priority) {
-        try {
-            if (!mThreadPool.isShutdown()) {
-                Handler handler = null;
-                if (callback != null) {
-                    handler = new Handler(Looper.myLooper());
-                }
+    public static <T> void execute(final SubscribeListener<T> subscribeListener, final ObserverListener<T> observerListener) {
 
-                final Handler finalHandler = handler;
-                mThreadPool.execute(new Runnable() {
+        Observable.create(new ObservableOnSubscribe<T>() {
+            @Override
+            public void subscribe(ObservableEmitter<T> emitter) throws Exception {
+                emitter.onNext(subscribeListener.runOnSubThread());
+                emitter.onComplete();
+            }
+        }).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<T>() {
                     @Override
-                    public void run() {
-                        android.os.Process.setThreadPriority(priority);
-                        try {
-                            runnable.run();
-                            if (finalHandler != null && callback != null) {
-                                finalHandler.post(callback);
-                            }
-                        } catch (final Throwable t) {
-                            t.printStackTrace();
-                        }
+                    public void accept(T t) throws Exception {
+                        observerListener.runOnUiThread(t);
                     }
                 });
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    private class SubscribeBean<T> {
-
-        private T bean;
-
-        public T getBean() {
-            return bean;
-        }
-
-        public void setBean(T bean) {
-            this.bean = bean;
-        }
     }
 
 }
