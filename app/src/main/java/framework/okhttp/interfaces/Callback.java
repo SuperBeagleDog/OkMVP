@@ -1,8 +1,7 @@
 package framework.okhttp.interfaces;
 
-import okhttp3.Call;
-import okhttp3.Response;
 
+import framework.okhttp.Result;
 
 /**
  * @Author Lyf
@@ -12,8 +11,8 @@ import okhttp3.Response;
  **/
 public interface Callback<T> {
 
-    void onFailure(Call call, Exception e);
+    void onFailure(Result<T> response);
 
-    void onResponse(Call call, Response response, T bean);
+    void onResponse(Result<T> response, T bean);
 
 }

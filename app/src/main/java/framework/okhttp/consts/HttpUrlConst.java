@@ -5,7 +5,7 @@ package framework.okhttp.consts;
  * @CreateTime 2018/1/22
  * @Description Const of Http request
  **/
-public interface HttpConst {
+public interface HttpUrlConst {
 
     // server url
     String SERVER_URL = "http://112.74.48.33:8018/";

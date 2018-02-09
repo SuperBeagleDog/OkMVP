@@ -3,24 +3,24 @@ package com.lyf.okmvp.http;
 
 import android.util.ArrayMap;
 
-import framework.okhttp.BaseHttpManager;
-import framework.okhttp.header.BaseHeaderManager;
+import framework.okhttp.BaseHttpUtil;
+import framework.okhttp.header.HeaderManager;
 
 /**
  * @Author Lyf
  * @CreateTime 2018/2/8
  * @Description
  **/
-public class HttpManager extends BaseHttpManager {
+public class HttpUtils extends BaseHttpUtil {
 
-    private static HttpManager INSTANCE;
+    private static HttpUtils INSTANCE;
 
-    private HttpManager() {
+    private HttpUtils() {
     }
 
-    public static HttpManager getInstance() {
+    public static HttpUtils getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new HttpManager();
+            INSTANCE = new HttpUtils();
         }
 
         return INSTANCE;
@@ -29,7 +29,7 @@ public class HttpManager extends BaseHttpManager {
     @Override
     protected ArrayMap<String, Object> getSignParams(ArrayMap<String, Object> params) {
 
-        BaseHeaderManager.getHeaderManager();
+        HeaderManager.getHeaderManager();
         // do sign params here.
         return params;
     }

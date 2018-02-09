@@ -1,9 +1,9 @@
 package framework.mvp.model.get;
 
-import com.lyf.okmvp.http.HttpManager;
+import com.lyf.okmvp.http.HttpUtils;
 
 import framework.bean.BaseBean;
-import framework.okhttp.consts.HttpConst;
+import framework.okhttp.consts.HttpUrlConst;
 import framework.okhttp.interfaces.Callback;
 import okhttp3.Call;
 import okhttp3.Response;
@@ -20,7 +20,7 @@ public class GetAppRequest {
      */
     public static void getAppConfig(final Callback<BaseBean> responseCallback) {
 
-        HttpManager.getInstance().doGet(HttpConst.GET_APP_CONFIGS,
+        HttpUtils.getInstance().doGet(HttpUrlConst.GET_APP_CONFIGS,
                 new Callback<BaseBean>() {
                     @Override
                     public void onFailure(Call call, Exception e) {
