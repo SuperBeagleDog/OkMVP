@@ -10,7 +10,7 @@ import framework.utils.LogUtil;
 /**
  * @Author Lyf
  * @CreateTime 2018/1/22
- * @Description HeaderManager class is simply for getting and adding Headers to each request on OkHttp.
+ * @Description A HeaderManager class is simply for getting and adding Headers to each request on Http.
  **/
 public class HeaderManager implements IHeaderManager {
 

@@ -8,7 +8,7 @@ import okhttp3.Headers;
 /**
  * @Author Lyf
  * @CreateTime 2018/2/23
- * @Description An Interface for defining What the okHttpManager can do.
+ * @Description An IOkHttpManager interface defines What the okHttpManager can do.
  * It's better to keep this interface Since You can learn quickly what the OkHttpManager does in here.
  * Instead of reading entirely codes of OkHttpManager.
  **/

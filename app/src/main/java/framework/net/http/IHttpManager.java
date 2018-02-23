@@ -9,17 +9,24 @@ import framework.net.response.Callback;
 /**
  * @Author Lyf
  * @CreateTime 2018/2/8
- * @Description
+ * @Description An IHttpManager interface defines What the IHttpManager can do.
+ * When you change your Http Framework to another, The new one must be implemented IHttpManager.
+ * If do so, you will change nothing for the rest of project.
  **/
 public interface IHttpManager {
 
     /**
-     * @param url                 Get请求的地址
-     * @param params              请求参数
-     * @param responseCallback<T> 请求返回的结果，其中的T,是json对应的Bean类
+     * @param url  A uniform resource locator (URL) with a scheme of either {@code http} or {@code https}.
+     * @param params A set of params which will be sent to remote server when a request is sent.
+     * @param responseCallback<T> The response returned by remote server.
      */
     <T> void doGet(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback);
 
+    /**
+     * @param url  A uniform resource locator (URL) with a scheme of either {@code http} or {@code https}.
+     * @param params A set of params which will be sent to remote server when a request is sent.
+     * @param responseCallback<T> The response returned by remote server.
+     */
     <T> void doPost(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback);
 
 }

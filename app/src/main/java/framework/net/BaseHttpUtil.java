@@ -10,8 +10,8 @@ import framework.net.response.Callback;
 /**
  * @Author Lyf
  * @CreateTime 2018/1/23
- * @Description you can use this class to do requests directly.
- * note that, you may should rewrite the getSignParams() method to sign your params before doing request.
+ * @Description you can use BaseHttpUtil to do requests directly.
+ * Note that: You may should rewrite the getSignParams() method to sign your params before doing request.
  * Return the original params if you don't need to sign your params.
  **/
 public abstract class BaseHttpUtil {

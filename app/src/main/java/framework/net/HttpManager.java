@@ -3,18 +3,19 @@ package framework.net;
 import framework.net.http.HttpBuilder;
 import framework.net.http.IHttpManager;
 import framework.net.http.okHttp.OkHttpManager;
-import framework.net.http.retrofit.RetrofitManager;
 
 /**
  * @Author Lyf
  * @CreateTime 2018/2/8
- * @Description
+ * @Description A HttpManager class is in charge of Managing Http Framework.
+ * Such as, sets some settings of http or decides to use which http library.
  **/
 public final class HttpManager {
 
+    // A tag for logging.
     private final static String TAG = HttpManager.class.getSimpleName();
 
-    // mHttpManager is the object of HttpManager's protocol.
+    // mHttpManager is an IHttpManager instance.
     private static IHttpManager mHttpManager;
 
     // Init HttpManager.
@@ -22,10 +23,17 @@ public final class HttpManager {
 
         mHttpManager = new OkHttpManager(httpBuilder);
 
-        // Use Retrofit instead of OkHttp.
+        /*
+         * Here is the code Shows you how to use Retrofit instead of OkHttp.
+         * As you can see, What you only have to do is creating another Manager which implements the IHttpManager.
+         */
         // mHttpManager = new RetrofitManager(httpBuilder);
     }
 
+    /**
+     * Returns An IHttpManager instance.
+     * If the project never initialized the HttpManager, A RuntimeException will be thrown.
+     */
     public static IHttpManager getHttpManager() {
 
         if (mHttpManager == null) {

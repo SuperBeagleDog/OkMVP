@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 /**
  * @Author Lyf
  * @CreateTime 2018/2/9
- * @Description A Response encloses data of response of remote server.
+ * @Description A Response class encloses data of response of remote server.
  **/
 public class Response<T> {
 
