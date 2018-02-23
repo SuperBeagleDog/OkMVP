@@ -1,7 +1,9 @@
 package framework.thread;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.Toast;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -48,6 +50,17 @@ public class ThreadManager {
                     }
                 });
 
+    }
+
+    /**
+     * Run on Ui Thread.
+     */
+    public static void runOnUiThread(Runnable runnable) {
+
+        Observable.just(runnable)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((a) -> runnable.run());
     }
 
 }

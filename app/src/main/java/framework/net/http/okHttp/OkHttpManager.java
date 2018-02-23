@@ -16,6 +16,7 @@ import framework.net.http.HttpBuilder;
 import framework.net.response.Callback;
 import framework.net.response.Response;
 import framework.net.util.Util;
+import framework.thread.ThreadManager;
 import framework.utils.GsonTools;
 import framework.utils.LogUtil;
 import io.reactivex.Observable;
@@ -72,69 +73,49 @@ public final class OkHttpManager implements IOkHttpManager {
                 .build();
 
 
-        // Uses RxJava2 to post a request.
-        Observable.create(new ObservableOnSubscribe<Response<T>>() {
+        mOkHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+
             @Override
-            public void subscribe(final ObservableEmitter<Response<T>> emitter) throws Exception {
+            public void onResponse(Call call, okhttp3.Response response) {
 
-                mOkHttpClient.newCall(request).
-                        enqueue(new okhttp3.Callback() {
+                Response<T> result = new Response<>();
 
-                            @Override
-                            public void onResponse(Call call, okhttp3.Response response) {
+                try {
 
-                                Response<T> result = new Response<>();
+                    if (responseCallback != null) {
 
-                                try {
-
-                                    if (responseCallback != null) {
-
-                                        if (response.body() != null) {
-                                            // Get the raw json from server.
-                                            String json = response.body().string();
-                                            // Parse raw json into bean
-                                            T bean = GsonTools.fromJson(json, (((ParameterizedType)
-                                                    (responseCallback.getClass().getGenericInterfaces())[0])
-                                                    .getActualTypeArguments()[0]));
-                                            // Save data.
-                                            result.setData(bean);
-                                        }
-                                        // Return the data.
-                                        emitter.onNext(result);
-                                    }
-
-                                } catch (Exception e) {
-                                    emitter.onNext(new Response<>());
-                                    LogUtil.log(TAG, "Parsing json failed = " + e.toString());
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call call, IOException e) {
-                                if (responseCallback != null) {
-                                    emitter.onNext(new Response<>());
-                                }
-                            }
-
-                        });
-
-
-            }
-        })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Response<T>>() {
-                    @Override
-                    public void accept(Response<T> response) throws Exception {
-                        if (responseCallback != null) {
-                            if (response.getCode() == HttpCodes.CODE_SUCCESS) {
-                                responseCallback.onResponse(response.getData(), response);
-                            } else {
-                                responseCallback.onFailure(response.getCode(), response.getMsg(), response);
-                            }
+                        if (response.body() != null) {
+                            // Get the raw json from server.
+                            String json = response.body().string();
+                            // Parse raw json into bean
+                            T bean = GsonTools.fromJson(json, (((ParameterizedType)
+                                    (responseCallback.getClass().getGenericInterfaces())[0])
+                                    .getActualTypeArguments()[0]));
+                            // Save data.
+                            result.setData(bean);
                         }
+
+                        // Return the data.
+                        onSuccessResponse(result, responseCallback);
                     }
-                });
+
+                } catch (Exception e) {
+
+                    Response<T> failureResponse = new Response<>();
+                    onFailureResponse(failureResponse, responseCallback);
+                    LogUtil.log(TAG, "Parsing json failed = " + e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if (responseCallback != null) {
+                    Response<T> failureResponse = new Response<>();
+                    onFailureResponse(failureResponse, responseCallback);
+                }
+            }
+
+        });
 
     }
 
@@ -142,7 +123,7 @@ public final class OkHttpManager implements IOkHttpManager {
     public <T> void doPost(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
 
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
-                        GsonTools.toJson(params));
+                GsonTools.toJson(params));
 
         Request request = new Request.Builder()
                 .url(url)
@@ -215,7 +196,6 @@ public final class OkHttpManager implements IOkHttpManager {
 
     }
 
-
     @Override
     public void cancelRequestWithTag(Object tag) {
 
@@ -251,6 +231,28 @@ public final class OkHttpManager implements IOkHttpManager {
         mOkHttpHeaders = headers.build();
 
         return mOkHttpHeaders;
+    }
+
+
+    /**
+     * Called when the response was Failure returned by the remote server.
+     * @param response
+     * @param responseCallback
+     * @param <T>
+     */
+    public <T> void onFailureResponse(Response<T> response, @NonNull Callback<T> responseCallback) {
+        ThreadManager.runOnUiThread(() -> responseCallback.onFailure(response.getCode(), response.getMsg(), response));
+    }
+
+
+    /**
+     * Called when the response was success returned by the remote server.
+     * @param response
+     * @param responseCallback
+     * @param <T>
+     */
+    public <T> void onSuccessResponse(Response<T> response, @NonNull Callback<T> responseCallback) {
+        ThreadManager.runOnUiThread(() -> responseCallback.onResponse(response.getData(), response));
     }
 
 }

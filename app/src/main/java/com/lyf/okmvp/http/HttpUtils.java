@@ -1,17 +1,17 @@
 package com.lyf.okmvp.http;
 
 
-import android.util.ArrayMap;
+import android.support.v4.util.ArrayMap;
 
-import framework.okhttp.BaseHttpUtil;
-import framework.okhttp.header.HeaderManager;
+import framework.net.BaseHttpUtil;
+import framework.net.header.HeaderManager;
 
 /**
  * @Author Lyf
  * @CreateTime 2018/2/8
  * @Description
  **/
-public class HttpUtils extends BaseHttpUtil {
+public class HttpUtils  extends BaseHttpUtil{
 
     private static HttpUtils INSTANCE;
 
