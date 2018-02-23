@@ -1,15 +1,17 @@
-package framework.okhttp.interfaces;
+package framework.net.http;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.ArrayMap;
+import android.support.v4.util.ArrayMap;
+
+import framework.net.response.Callback;
 
 /**
  * @Author Lyf
- * @CreateTime 2018/1/23
+ * @CreateTime 2018/2/8
  * @Description
  **/
-public interface IBaseRequestMethods {
+public interface IHttpManager {
 
     /**
      * @param url                 Get请求的地址

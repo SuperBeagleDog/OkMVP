@@ -1,4 +1,4 @@
-package framework.okhttp.consts;
+package framework.net.consts;
 
 /**
  * @Author Lyf

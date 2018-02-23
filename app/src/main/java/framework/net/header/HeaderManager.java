@@ -1,17 +1,11 @@
-package framework.okhttp.header;
+package framework.net.header;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.util.SimpleArrayMap;
 
-import java.util.Map;
-
-import framework.okhttp.consts.HeaderConst;
-
-import framework.okhttp.http.HttpManager;
 import framework.utils.LogUtil;
-import okhttp3.Headers;
 
 /**
  * @Author Lyf

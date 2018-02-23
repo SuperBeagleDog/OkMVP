@@ -1,18 +1,19 @@
-package framework.okhttp;
+package framework.net.response;
 
 import android.support.annotation.Nullable;
 
 /**
  * @Author Lyf
  * @CreateTime 2018/2/9
- * @Description
+ * @Description A Response encloses data of response of remote server.
  **/
-public class Result<T> {
+public class Response<T> {
 
     private int code;
 
     private String msg;
 
+    @Nullable
     private T data;
 
     public int getCode() {
@@ -31,6 +32,7 @@ public class Result<T> {
         this.msg = msg;
     }
 
+    @Nullable
     public T getData() {
         return data;
     }
