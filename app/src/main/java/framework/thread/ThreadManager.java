@@ -33,22 +33,15 @@ public class ThreadManager {
      * @param <T>               after do something in subThread,
      *                          you may want to pass a T(bean) object as a result to ui thread to update views.
      */
-    public static <T> void execute(final SubscribeListener<T> subscribeListener, final ObserverListener<T> observerListener) {
+    public static <T> void execute(SubscribeListener<T> subscribeListener,
+                                   ObserverListener<T> observerListener) {
 
-        Observable.create(new ObservableOnSubscribe<T>() {
-            @Override
-            public void subscribe(ObservableEmitter<T> emitter) throws Exception {
-                emitter.onNext(subscribeListener.runOnSubThread());
-                emitter.onComplete();
-            }
+        Observable.create((ObservableOnSubscribe<T>) emitter -> {
+            emitter.onNext(subscribeListener.runOnSubThread());
+            emitter.onComplete();
         }).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<T>() {
-                    @Override
-                    public void accept(T t) throws Exception {
-                        observerListener.runOnUiThread(t);
-                    }
-                });
+                .subscribe(observerListener::runOnUiThread);
 
     }
 
@@ -60,7 +53,7 @@ public class ThreadManager {
         Observable.just(runnable)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((a) -> runnable.run());
+                .subscribe(Runnable::run);
     }
 
 }
