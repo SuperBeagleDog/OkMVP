@@ -34,7 +34,7 @@ public final class HttpManager {
      * Returns An IHttpManager instance.
      * If the project never initialized the HttpManager, A RuntimeException will be thrown.
      */
-    public static IHttpManager getHttpManager() {
+    static IHttpManager getHttpManager() {
 
         if (mHttpManager == null) {
             throw new RuntimeException("You have to invoke initHttpManager() to init HttpManager before you use it.");
@@ -43,7 +43,7 @@ public final class HttpManager {
         return mHttpManager;
     }
 
-    private HttpManager(){
+    private HttpManager() {
         throw new UnsupportedOperationException("You can't instantiate this class but invoke getHttpManager() after called initHttpManager().");
     }
 

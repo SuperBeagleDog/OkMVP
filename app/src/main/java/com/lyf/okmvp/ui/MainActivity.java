@@ -29,25 +29,6 @@ public class MainActivity extends BaseActivity {
         TransformingOperations.actionFlatMap();
 
 
-//        System.out.print("ss");
-//        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                doNetWorkTest();
-//            }
-//        });
-//
-//        int answer = 42;
-//
-//        Thread t = new Thread(new Runnable() {
-//
-//            public void run() {
-//
-//                System.out.println("The answer is: " + answer);
-//
-//            }
-//
-//        });
     }
 
     private void toast(String test) {
