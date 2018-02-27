@@ -16,11 +16,14 @@ import framework.database.entities.UserInfo;
 import framework.mvp.model.get.GetAppRequest;
 import framework.net.response.Callback;
 import framework.net.response.Response;
+import framework.rxjava2.RxJava2Manager;
+import framework.rxjava2.demo.TransformingOperations;
 import framework.thread.ThreadManager;
 
 import framework.thread.interfaces.ObserverListener;
 import framework.thread.interfaces.SubscribeListener;
 import framework.utils.LogUtil;
+import io.reactivex.Flowable;
 
 public class MainActivity extends BaseActivity {
 
@@ -30,8 +33,9 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ThreadManager.runOnUiThread(()
-                -> Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show());
+        ThreadManager.runOnUiThread(() ->
+                toast("test"));
+        TransformingOperations.actionFlatMap();
 
 
 //        System.out.print("ss");
@@ -53,6 +57,10 @@ public class MainActivity extends BaseActivity {
 //            }
 //
 //        });
+    }
+
+    private void toast(String test) {
+        Toast.makeText(getApplicationContext(), test, Toast.LENGTH_SHORT).show();
     }
 
     private void doNetWorkTest() {
@@ -89,30 +97,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void toastUserBean() {
-
-        ThreadManager.execute(new SubscribeListener<UserInfo>() {
-            @Override
-            public UserInfo runOnSubThread() throws Exception {
-                // Do something on subThread and then return the T bean.
-                UserDao userDao = UserDataBase.getInstance(MainActivity.this).getUserDao();
-                // query a user
-                return userDao.getUserInfoViaId(100);
-            }
-        }, new ObserverListener<UserInfo>() {
-            @Override
-            public void runOnUiThread(@Nullable UserInfo userInfo) {
-                // Do something on UiThread with UserInfo class.
-                if (userInfo == null) {
-                    Toast.makeText(MainActivity.this, "query failed!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "userName=" + userInfo.getFirstName() + userInfo.getLastName(),
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-    }
 
     private void log(String log) {
         Log.d(MainActivity.class.getSimpleName(), log);

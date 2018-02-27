@@ -1,13 +1,15 @@
 package com.lyf.okmvp.model.login;
 
-import android.util.ArrayMap;
 
+import android.support.v4.util.ArrayMap;
+
+import com.lyf.okmvp.http.HttpUrlConst;
 import com.lyf.okmvp.http.HttpUtils;
 
 import framework.bean.BaseBean;
-import framework.okhttp.Result;
-import framework.okhttp.consts.HttpUrlConst;
-import framework.okhttp.interfaces.Callback;
+import framework.net.response.Callback;
+import framework.net.response.Response;
+
 
 /**
  * @Author Lyf
@@ -16,32 +18,27 @@ import framework.okhttp.interfaces.Callback;
  **/
 public class PostLoginRequest {
 
-    public static void PostLogin(final ArrayMap<String, Object> params, final Callback<BaseBean<Integer>> responseCallback) {
+    // login
+    public static void PostLogin(final ArrayMap<String, Object> params, final Callback<BaseBean> responseCallback) {
 
-        HttpUtils.getInstance().doPost(HttpUrlConst.POST_LOGIN_REQUEST, params, new Callback<BaseBean<Integer>>() {
+
+        HttpUtils.getInstance().doPost(HttpUrlConst.POST_LOGIN_REQUEST, params, new Callback<BaseBean>() {
             @Override
-            public void onFailure(Result<BaseBean<Integer>> response) {
-                // 请求失败回调
-                responseCallback.onFailure(response);
+            public void onFailure(int errorCode, String errorMsg, Response<BaseBean> response) {
+
             }
 
             @Override
-            public void onResponse(Result<BaseBean<Integer>> response, BaseBean<Integer> bean) {
-                // 请求成功回调.
-                // 获取Bean类数据
+            public void onResponse(BaseBean bean, Response<BaseBean> response) {
 
-                int code = response.getCode();
-                String msg = response.getMsg();
-
-                // 从response的getData()里拿bean,再从bean的getData()里拿bean
-                Integer data = response.getData().getData();
-                // 从bean的getData()里拿bean
-                data = bean.getData();
-                responseCallback.onResponse(response, bean);
             }
         });
 
     }
 
+    // cancel login
+    public static void cancelLogin(){
+        HttpUtils.getInstance().cancelRequestWithTag(HttpUrlConst.POST_LOGIN_REQUEST);
+    }
 
 }

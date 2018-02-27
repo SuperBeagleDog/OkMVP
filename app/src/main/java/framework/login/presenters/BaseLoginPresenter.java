@@ -3,7 +3,8 @@ package framework.login.presenters;
 import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.ArrayMap;
+import android.support.v4.util.ArrayMap;
+
 import java.util.ArrayList;
 import java.util.List;
 import framework.login.interceptors.ILoginInterceptor;
@@ -18,7 +19,7 @@ import framework.login.interceptors.LoginInterceptor;
  **/
 public abstract class BaseLoginPresenter implements ILogin {
 
-    // Uses Application context is better.
+    // It's better to use Application context.
     private Application mContext;
 
     // Interceptor for checking whether the params legal or not.

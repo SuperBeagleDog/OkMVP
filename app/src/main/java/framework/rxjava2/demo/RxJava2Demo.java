@@ -1,31 +1,25 @@
 package framework.rxjava2.demo;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
-import framework.utils.GsonTools;
+
+import framework.utils.parse.ParseUtil;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
-import io.reactivex.internal.observers.FutureObserver;
 import io.reactivex.internal.observers.FutureSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -33,11 +27,20 @@ import io.reactivex.schedulers.Schedulers;
  * @Author Lyf
  * @CreateTime 2018/2/7
  * @Description This is a set of demos of RxJava2, which shows you how to simply use RxJava2.
+ * <p>
+ * Demos can be divided into four classes of operation.
+ * 1, Filtering Operation.
+ * 2, Combining Operation.
+ * 3, Transforming Operation.
+ * 4, Reaction-Stream Operation.
+ * <p>
  **/
 public class RxJava2Demo {
 
+    private static final String TAG = RxJava2Demo.class.getSimpleName();
+
     private static void log(String log) {
-        Log.d("RxJava2Demo", log);
+        Log.d(TAG, log);
     }
 
     public static String getThreadName() {
@@ -47,6 +50,8 @@ public class RxJava2Demo {
     // Demos below.
 
     /**
+     * Reaction-Stream Operation.
+     * <p>
      * This method is used to do something on two separately same/different threads(threads are called one after the other) in an async way.
      * For instance, you can do some heavy cpu operations on subThread and then updates your views on UI thread.
      * <p>
@@ -404,9 +409,9 @@ public class RxJava2Demo {
 
         final String preFix = "fromIterable-";
 
-        Integer[] ob1 ={1,2,3};
-        Integer[] ob2 ={4,5,6};
-        Integer[] ob3 ={7,8,9};
+        Integer[] ob1 = {1, 2, 3};
+        Integer[] ob2 = {4, 5, 6};
+        Integer[] ob3 = {7, 8, 9};
 
         ArrayList<Integer[]> list = new ArrayList<>();
 
@@ -418,7 +423,7 @@ public class RxJava2Demo {
             @Override
             public void accept(Object o) throws Exception {
                 Integer[] array = (Integer[]) o;
-                log(preFix + " accept =" + GsonTools.toJson(array) + getThreadName() + "," + toString());
+                log(preFix + " accept =" + ParseUtil.toJson(array) + getThreadName() + "," + toString());
             }
         });
     }

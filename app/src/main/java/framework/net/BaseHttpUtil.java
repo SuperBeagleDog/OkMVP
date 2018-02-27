@@ -60,4 +60,7 @@ public abstract class BaseHttpUtil {
     public <T> void doPost(@NonNull String url, @Nullable Callback<T> responseCallback) {
     }
 
+    public void cancelRequestWithTag(Object tag) {
+
+    }
 }

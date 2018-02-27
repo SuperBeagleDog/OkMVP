@@ -3,6 +3,9 @@ package com.lyf.okmvp;
 import android.app.Application;
 
 import framework.SingletonFactory;
+import framework.net.http.HttpBuilder;
+import framework.net.HttpManager;
+
 
 /**
  * @Author Lyf
@@ -14,7 +17,15 @@ public class LApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        HttpManager.initHttpManager(new HttpBuilder()
+                .setCodeSuccess(0)
+                .setConnectTimeOut(30 * 1000)
+                .setReadTimeOut(30 * 1000)
+                .setWriteTimeOut(30 * 1000));
+
         SingletonFactory.initSingletonFactory(this);
+
     }
 
 }

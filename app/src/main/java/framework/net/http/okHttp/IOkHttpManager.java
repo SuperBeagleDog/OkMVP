@@ -4,6 +4,7 @@ import android.support.v4.util.ArrayMap;
 
 import framework.net.http.IHttpManager;
 import okhttp3.Headers;
+import okhttp3.Request;
 
 /**
  * @Author Lyf
@@ -27,5 +28,12 @@ public interface IOkHttpManager extends IHttpManager{
      * @return Headers.
      */
     Headers getOkHttpHeaders(ArrayMap<String, String> originalHeaders);
+
+
+//    /**
+//     *
+//     * @return
+//     */
+//    Request createRequest();
 
 }

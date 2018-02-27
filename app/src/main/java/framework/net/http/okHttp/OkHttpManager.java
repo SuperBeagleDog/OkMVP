@@ -5,26 +5,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 
 import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
 import java.util.concurrent.TimeUnit;
 
 import framework.net.consts.HttpCodes;
 import framework.net.header.HeaderManager;
-
 import framework.net.header.IHeaderManager;
 import framework.net.http.HttpBuilder;
 import framework.net.response.Callback;
 import framework.net.response.Response;
 import framework.net.util.Util;
 import framework.thread.ThreadManager;
-import framework.utils.GsonTools;
 import framework.utils.LogUtil;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import framework.utils.parse.ParseUtil;
 import okhttp3.Call;
 import okhttp3.Headers;
 import okhttp3.MediaType;
@@ -72,25 +64,21 @@ public final class OkHttpManager implements IOkHttpManager {
                 .url(Util.composeParams(url, params))
                 .build();
 
-        // Uses RxJava2 to post a request.
         handleNetTask(request, responseCallback);
     }
-
 
     @Override
     public <T> void doPost(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
 
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
-                GsonTools.toJson(params));
+                ParseUtil.toJson(params));
 
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
                 .build();
 
-        // Uses RxJava2 to post a request.
         handleNetTask(request, responseCallback);
-
     }
 
     @Override
@@ -132,40 +120,24 @@ public final class OkHttpManager implements IOkHttpManager {
 
     private <T> void handleNetTask(Request request, Callback<T> responseCallback) {
 
-        Observable.create((ObservableOnSubscribe<Response<T>>) emitter ->
-                mOkHttpClient
-                        .newCall(request)
-                        .enqueue(new okhttp3.Callback() {
+        mOkHttpClient.newCall(request)
+                .enqueue(new okhttp3.Callback() {
 
-                            @Override
-                            public void onResponse(Call call, okhttp3.Response response) {
-                                handleResponse(emitter, response, responseCallback);
-                            }
+                    @Override
+                    public void onResponse(Call call, okhttp3.Response response) {
+                        handleResponse(response, responseCallback);
+                    }
 
-                            @Override
-                            public void onFailure(Call call, IOException e) {
-                                Response<T> failureResponse = new Response<>();
-                                emitter.onNext(failureResponse);
-                                emitter.onComplete();
-                            }
-
-                        }))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> {
-                    if (responseCallback != null) {
-                        if (response.getCode() == HttpCodes.CODE_SUCCESS) {
-                            responseCallback.onResponse(response.getData(), response);
-                        } else {
-                            responseCallback.onFailure(response.getCode(), response.getMsg(), response);
-                        }
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        handleFailure(e, responseCallback);
                     }
 
                 });
 
     }
 
-    private <T> void handleResponse(ObservableEmitter<Response<T>> emitter,
-                                    okhttp3.Response response, Callback<T> responseCallback) {
+    private <T> void handleResponse(okhttp3.Response response, Callback<T> responseCallback) {
 
         Response<T> result = new Response<>();
 
@@ -177,25 +149,46 @@ public final class OkHttpManager implements IOkHttpManager {
                     // Get the raw json from server.
                     String json = response.body().string();
                     // Parse raw json into bean
-                    T bean = GsonTools.fromJson(json, (((ParameterizedType)
-                            (responseCallback.getClass().getGenericInterfaces())[0])
-                            .getActualTypeArguments()[0]));
+                    T bean = ParseUtil.parseJson(json, responseCallback.getClass());
                     // Save data.
                     result.setData(bean);
                 }
 
                 // Return the data.
-                emitter.onNext(result);
+                onCallBack(result, responseCallback);
             }
 
         } catch (Exception e) {
 
             Response<T> failureResponse = new Response<>();
-            emitter.onNext(failureResponse);
+            onCallBack(failureResponse, responseCallback);
             LogUtil.log(TAG, "Parsing json failed = " + e.toString());
-        } finally {
-            emitter.onComplete();
         }
+
+    }
+
+    private <T> void handleFailure(IOException e, Callback<T> responseCallback) {
+        Response<T> failureResponse = new Response<>();
+        failureResponse.setMsg(e.toString());
+        onCallBack(failureResponse, responseCallback);
+    }
+
+    private <T> void onCallBack(Response<T> response, Callback<T> responseCallback) {
+
+        ThreadManager.runOnUiThread(() -> {
+
+                    if (responseCallback != null) {
+
+                        if (response.getCode() == HttpCodes.CODE_SUCCESS) {
+                            responseCallback.onResponse(response.getData(), response);
+                        } else {
+                            responseCallback.onFailure(response.getCode(), response.getMsg(), response);
+                        }
+
+                    }
+                }
+        );
+
     }
 
 }

@@ -24,8 +24,8 @@ public class DataBaseManager {
         return INSTANCE;
     }
 
-    public <T extends RoomDatabase> T getDataBase(Context context, String dataBaseName, Class<T> tClass) {
-        return Room.databaseBuilder(context, tClass, dataBaseName).build();
+    public <T extends RoomDatabase> T getDataBase(Context context,  Class<T> tClass) {
+        return Room.databaseBuilder(context, tClass, tClass.getSimpleName()).build();
     }
 
 }

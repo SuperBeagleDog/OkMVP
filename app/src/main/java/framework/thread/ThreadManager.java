@@ -1,20 +1,10 @@
 package framework.thread;
 
-import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.Toast;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import framework.thread.interfaces.ObserverListener;
 import framework.thread.interfaces.SubscribeListener;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -51,7 +41,6 @@ public class ThreadManager {
     public static void runOnUiThread(Runnable runnable) {
 
         Observable.just(runnable)
-                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Runnable::run);
     }

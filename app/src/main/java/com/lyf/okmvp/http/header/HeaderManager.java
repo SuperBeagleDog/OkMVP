@@ -1,10 +1,11 @@
-package framework.net.header;
+package com.lyf.okmvp.http.header;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.util.SimpleArrayMap;
 
+import framework.net.header.IHeaderManager;
 import framework.utils.LogUtil;
 
 /**
@@ -17,7 +18,7 @@ public class HeaderManager implements IHeaderManager {
     private final static String TAG = HeaderManager.class.getSimpleName();
 
     /**
-     * Converts the null param's value into empty string if need.
+     * Turns the null param's value into empty string if need.
      */
     private boolean mTurnsNullValueToEmpty = true;
 

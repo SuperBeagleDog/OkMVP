@@ -43,4 +43,8 @@ public final class HttpManager {
         return mHttpManager;
     }
 
+    private HttpManager(){
+        throw new UnsupportedOperationException("You can't instantiate this class but invoke getHttpManager() after called initHttpManager().");
+    }
+
 }
