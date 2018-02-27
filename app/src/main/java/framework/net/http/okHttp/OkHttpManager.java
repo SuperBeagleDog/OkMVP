@@ -45,12 +45,15 @@ public final class OkHttpManager implements IOkHttpManager {
     // Sets some settings of http to OkHttpClient with a HttpBuilder.
     public OkHttpManager(HttpBuilder httpBuilder) {
 
+        // Add ssl.
+        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
 
         OkHttpClient.Builder okHttpBuilder = mOkHttpClient.newBuilder();
         okHttpBuilder.readTimeout(httpBuilder.getReadTimeOut(), TimeUnit.MILLISECONDS)
                 .writeTimeout(httpBuilder.getWriteTimeOut(), TimeUnit.MILLISECONDS)
                 .connectTimeout(httpBuilder.getConnectTimeOut(), TimeUnit.MILLISECONDS)
-                .cookieJar(CookieManager.getCookieManager());
+                .cookieJar(CookieManager.getCookieManager())
+                .sslSocketFactory(sslParams.sSLSocketFactory,sslParams.trustManager);
         okHttpBuilder.build();
 
     }
