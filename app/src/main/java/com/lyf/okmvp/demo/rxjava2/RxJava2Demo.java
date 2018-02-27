@@ -1,4 +1,4 @@
-package framework.rxjava2.demo;
+package com.lyf.okmvp.demo.rxjava2;
 
 import android.util.Log;
 

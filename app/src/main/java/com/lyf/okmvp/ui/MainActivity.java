@@ -1,29 +1,20 @@
 package com.lyf.okmvp.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.lyf.okmvp.R;
-import com.lyf.okmvp.http.HttpUtils;
 
 import framework.bean.BaseBean;
-import framework.database.daos.UserDao;
-import framework.database.databases.UserDataBase;
-import framework.database.entities.UserInfo;
 import framework.mvp.model.get.GetAppRequest;
 import framework.net.response.Callback;
 import framework.net.response.Response;
-import framework.rxjava2.RxJava2Manager;
-import framework.rxjava2.demo.TransformingOperations;
+
+import com.lyf.okmvp.demo.rxjava2.TransformingOperations;
 import framework.thread.ThreadManager;
 
-import framework.thread.interfaces.ObserverListener;
-import framework.thread.interfaces.SubscribeListener;
 import framework.utils.LogUtil;
-import io.reactivex.Flowable;
 
 public class MainActivity extends BaseActivity {
 
@@ -79,23 +70,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void runRxJava2Demo() {
 
-//        RxJava2Demo.create();
-//        RxJava2Demo.fromPublisher();
-//        RxJava2Demo.just();
-//        RxJava2Demo.amb();
-//        RxJava2Demo.ambArray();
-//        RxJava2Demo.combineLatest();
-//        RxJava2Demo.concat();
-//        RxJava2Demo.fromCallable();
-//        RxJava2Demo.fromFuture();
-//        RxJava2Demo.merge();
-//        RxJava2Demo.mergeArray();
-//        RxJava2Demo.fromCallable();
-//        RxJava2Demo.fromIterable();
-
-    }
 
 
     private void log(String log) {

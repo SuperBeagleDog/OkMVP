@@ -1,4 +1,4 @@
-package framework.rxjava2;
+package com.lyf.okmvp.demo.rxjava2;
 
 /**
  * @Author Lyf

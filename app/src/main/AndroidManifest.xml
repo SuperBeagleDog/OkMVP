@@ -26,7 +26,9 @@
         </activity>
 
         <activity android:name=".ui.login.LoginActivity"/>
-        <activity android:name=".demo.RoomDemoActivity"/>
+        <activity android:name=".demo.room.RoomDemoActivity"/>
+        <activity android:name=".demo.rxjava2.RxJava2DemoActivity"/>
+
     </application>
 
 </manifest>

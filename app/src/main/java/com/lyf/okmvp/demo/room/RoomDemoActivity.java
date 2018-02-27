@@ -1,11 +1,10 @@
-package com.lyf.okmvp.demo;
+package com.lyf.okmvp.demo.room;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.lyf.okmvp.ui.BaseActivity;
-import com.lyf.okmvp.ui.MainActivity;
 
 import framework.database.daos.UserDao;
 import framework.database.databases.UserDataBase;
