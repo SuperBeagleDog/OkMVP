@@ -9,10 +9,9 @@ import framework.net.consts.HttpCodes;
  **/
 public final class HttpBuilder {
 
-    private int readTimeOut = 30 * 1000;
-    private int writeTimeOut = 30 * 1000;
-    private int connectTimeOut = 30 * 1000;
-
+    private int readTimeOut = 30_000;
+    private int writeTimeOut = 30_000;
+    private int connectTimeOut = 30_000;
 
     /**
      * Sets Read, Write and Connect TimeOut.
