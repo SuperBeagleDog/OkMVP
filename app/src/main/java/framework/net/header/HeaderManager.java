@@ -33,7 +33,12 @@ public class HeaderManager implements IHeaderManager {
     public static HeaderManager getHeaderManager() {
 
         if (INSTANCE == null) {
-            INSTANCE = new HeaderManager();
+            synchronized (HeaderManager.class){
+                if (INSTANCE == null) {
+                    INSTANCE = new HeaderManager();
+                }
+            }
+
         }
         return INSTANCE;
     }

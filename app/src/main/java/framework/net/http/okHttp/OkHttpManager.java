@@ -45,10 +45,12 @@ public final class OkHttpManager implements IOkHttpManager {
     // Sets some settings of http to OkHttpClient with a HttpBuilder.
     public OkHttpManager(HttpBuilder httpBuilder) {
 
+
         OkHttpClient.Builder okHttpBuilder = mOkHttpClient.newBuilder();
         okHttpBuilder.readTimeout(httpBuilder.getReadTimeOut(), TimeUnit.MILLISECONDS)
                 .writeTimeout(httpBuilder.getWriteTimeOut(), TimeUnit.MILLISECONDS)
-                .connectTimeout(httpBuilder.getConnectTimeOut(), TimeUnit.MILLISECONDS);
+                .connectTimeout(httpBuilder.getConnectTimeOut(), TimeUnit.MILLISECONDS)
+                .cookieJar(CookieManager.getCookieManager());
         okHttpBuilder.build();
 
     }
