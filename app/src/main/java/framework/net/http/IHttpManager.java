@@ -10,8 +10,8 @@ import framework.net.response.Callback;
  * @Author Lyf
  * @CreateTime 2018/2/8
  * @Description An IHttpManager interface defines What the IHttpManager can do.
- * When you change your Http Framework to another, The new one must be implemented IHttpManager.
- * If do so, you will change nothing for the rest of project.
+ * When you change your Http library to another, The class of enclosing the new library should be implemented this interface.
+ * If do so, you will change nothing to the rest of project.
  **/
 public interface IHttpManager {
 

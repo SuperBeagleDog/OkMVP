@@ -1,22 +1,17 @@
 package com.lyf.okmvp.ui.login;
 
-import android.app.Application;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.lyf.okmvp.ui.BaseActivity;
 
 import framework.login.ILogin;
-import framework.login.interceptors.ILoginInterceptor;
-import framework.utils.ToastHelper;
 
 
 /**
  * @Author Lyf
  * @CreateTime 2018/2/5
- * @Description 登录页
+ * @Description A login Activity.
  **/
 public class LoginActivity extends BaseActivity {
 
