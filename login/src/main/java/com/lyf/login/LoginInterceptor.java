@@ -1,17 +1,18 @@
-package framework.login.interceptors;
+package com.lyf.login;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import framework.utils.PhoneUtil;
+import com.lyf.login.util.PhoneUtil;
+
 
 /**
  * @Author Lyf
  * @CreateTime 2018/2/1
  * @Description Checking params, return true if the params are legal, return false if the params are illegal.
  **/
-public class LoginInterceptor implements ILoginInterceptor {
+public class LoginInterceptor {
 
     private Application application;
     private final static String PHONE_NUM_NULL = "请输入手机号码";
@@ -19,13 +20,12 @@ public class LoginInterceptor implements ILoginInterceptor {
     private final static String PASS_WORD_NULL = "请输入密码";
     private final static String VERIFY_CODES_NULL = "请输入验证码";
 
-    @Override
+
     public boolean checkLoginWithPassWord(@NonNull Application application, @NonNull String phoneNum, @NonNull String passWord) {
         this.application = application;
         return checkPhoneNum(phoneNum) && checkPhonePassWord(passWord);
     }
 
-    @Override
     public boolean checkLoginWithVerifyCode(@NonNull Application application, @NonNull String phoneNum, @NonNull String verificationCode) {
         this.application = application;
         return checkPhoneNum(phoneNum) && checkVerifyCodes(verificationCode);

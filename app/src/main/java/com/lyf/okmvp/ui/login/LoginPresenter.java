@@ -1,46 +1,34 @@
 package com.lyf.okmvp.ui.login;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
+import android.util.ArrayMap;
 
-import com.lyf.okmvp.model.login.PostLoginRequest;
-import android.support.v4.util.ArrayMap;
-import framework.bean.BaseBean;
-import framework.login.ILogin;
-import framework.login.presenters.BaseLoginPresenter;
-import framework.net.response.Callback;
-import framework.net.response.Response;
-
+import com.lyf.login.AbstractLoginPresenter;
 
 /**
  * @Author Lyf
- * @CreateTime 2018/2/5
+ * @CreateTime 2018/2/28
  * @Description
  **/
-public class LoginPresenter extends BaseLoginPresenter implements ILogin {
+public class LoginPresenter extends AbstractLoginPresenter {
 
-
-    public LoginPresenter(Application mContext) {
-        super(mContext);
+    public LoginPresenter(Application mApplication) {
+        super(mApplication);
     }
 
     @Override
-    protected void onLogin(ArrayMap<String, Object> loginParams) {
-
-        PostLoginRequest.PostLogin(loginParams, new Callback<BaseBean>() {
-
-            @Override
-            public void onFailure(int errorCode, String errorMsg, Response<BaseBean> response) {
-
-            }
-
-            @Override
-            public void onResponse(BaseBean bean, Response<BaseBean> response) {
-
-            }
-        });
+    public void onLoginWithPassWord(@NonNull ArrayMap<String, String> mLoginParams) {
 
     }
 
+    @Override
+    public void onLoginWithPlatforms(@NonNull ArrayMap<String, String> mLoginParams) {
 
+    }
 
+    @Override
+    public void onLoginWithVerifyCode(@NonNull ArrayMap<String, String> mLoginParams) {
+
+    }
 }

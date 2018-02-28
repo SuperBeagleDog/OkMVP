@@ -3,9 +3,9 @@ package com.lyf.okmvp.ui.login;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.lyf.login.LoginContact;
+import com.lyf.login.AbstractLoginPresenter;
 import com.lyf.okmvp.ui.BaseActivity;
-
-import framework.login.ILogin;
 
 
 /**
@@ -13,16 +13,15 @@ import framework.login.ILogin;
  * @CreateTime 2018/2/5
  * @Description A login Activity.
  **/
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements LoginContact.View {
 
-    private ILogin mLoginPresenter;
+    private LoginContact.Presenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // mLoginPresenter is an Object of ILogin Interface.
-        mLoginPresenter = new LoginPresenter(getApplication());
+        mPresenter = new LoginPresenter(getApplication());
         onLoginClick();
     }
 
@@ -30,33 +29,23 @@ public class LoginActivity extends BaseActivity {
     private void onLoginClick() {
 
         // pass params to presenter which will check the params, and do login request if the params is valid.
-        mLoginPresenter.onLoginWithPassWord("phone", "132123456789",
+        mPresenter.onLoginWithPassWord("phone", "132123456789",
                 "password", "*****");
 
-        // Clears the common checking if you need.
-        // mLoginPresenter.clearAllInterceptors();
+    }
 
-        // add interceptor to verify and filter the params before it is passed to server if you need.
+    @Override
+    public void setPresenter(LoginContact.Presenter presenter) {
 
-//         mLoginPresenter.addInterceptor(new ILoginInterceptor() {
-//            @Override
-//            public boolean checkLoginWithPassWord(@NonNull Application application,
-//                                                  @NonNull String phoneNum, @NonNull String passWord) {
-//                if (phoneNum.length() < 6) {
-//                    ToastHelper.toast(application, "手机号不足6位");
-//                    return false;
-//                } else {
-//                    return true;
-//                }
-//            }
-//
-//            @Override
-//            public boolean checkLoginWithVerifyCode(@NonNull Application application,
-//                                                    @NonNull String phoneNum, @NonNull String verificationCode) {
-//                return false;
-//            }
-//
-//        });
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
 
     }
 
