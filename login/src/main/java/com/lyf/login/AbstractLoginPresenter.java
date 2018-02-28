@@ -3,8 +3,7 @@ package com.lyf.login;
 import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.ArrayMap;
-
+import android.support.v4.util.ArrayMap;
 
 
 /**
@@ -18,7 +17,7 @@ public abstract class AbstractLoginPresenter implements LoginContact.Presenter {
     private Application mApplication;
 
     private LoginContact.View mLoginView;
-    private ArrayMap<String, String> mLoginParams = new ArrayMap<>();
+    private ArrayMap<String, Object> mLoginParams = new ArrayMap<>();
     private LoginInterceptor mLoginInterceptor = new LoginInterceptor();
 
     public AbstractLoginPresenter(Application mApplication,LoginContact.View mLoginView) {
@@ -26,9 +25,9 @@ public abstract class AbstractLoginPresenter implements LoginContact.Presenter {
         this.mApplication = mApplication;
     }
 
-    public abstract void onLoginWithPassWord(@NonNull ArrayMap<String, String> mLoginParams);
-    public abstract void onLoginWithPlatforms(@NonNull ArrayMap<String, String> mLoginParams);
-    public abstract void onLoginWithVerifyCode(@NonNull ArrayMap<String, String> mLoginParams);
+    public abstract void onLoginWithPassWord(@NonNull ArrayMap<String, Object> mLoginParams);
+    public abstract void onLoginWithPlatforms(@NonNull ArrayMap<String, Object> mLoginParams);
+    public abstract void onLoginWithVerifyCode(@NonNull ArrayMap<String, Object> mLoginParams);
 
 
     @Override
