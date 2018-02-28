@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.ArrayMap;
 
 import com.lyf.login.AbstractLoginPresenter;
+import com.lyf.login.LoginContact;
 
 /**
  * @Author Lyf
@@ -13,8 +14,9 @@ import com.lyf.login.AbstractLoginPresenter;
  **/
 public class LoginPresenter extends AbstractLoginPresenter {
 
-    public LoginPresenter(Application mApplication) {
-        super(mApplication);
+
+    public LoginPresenter(Application mApplication, LoginContact.View mLoginView) {
+        super(mApplication, mLoginView);
     }
 
     @Override

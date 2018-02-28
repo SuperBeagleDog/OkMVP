@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.lyf.login.LoginContact;
-import com.lyf.login.AbstractLoginPresenter;
 import com.lyf.okmvp.ui.BaseActivity;
 
 
@@ -21,7 +20,7 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mPresenter = new LoginPresenter(getApplication());
+        mPresenter = new LoginPresenter(getApplication(),this);
         onLoginClick();
     }
 
@@ -31,11 +30,6 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
         // pass params to presenter which will check the params, and do login request if the params is valid.
         mPresenter.onLoginWithPassWord("phone", "132123456789",
                 "password", "*****");
-
-    }
-
-    @Override
-    public void setPresenter(LoginContact.Presenter presenter) {
 
     }
 

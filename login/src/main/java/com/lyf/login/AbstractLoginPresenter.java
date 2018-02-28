@@ -10,16 +10,19 @@ import android.util.ArrayMap;
 /**
  * @Author Lyf
  * @CreateTime 2018/2/5
- * @Description
+ * @Description A AbstractLoginPresenter deals with certain tasks.
+ * For instance, initializing an interceptor to checking login params.
  **/
 public abstract class AbstractLoginPresenter implements LoginContact.Presenter {
 
     private Application mApplication;
 
+    private LoginContact.View mLoginView;
     private ArrayMap<String, String> mLoginParams = new ArrayMap<>();
     private LoginInterceptor mLoginInterceptor = new LoginInterceptor();
 
-    public AbstractLoginPresenter(Application mApplication) {
+    public AbstractLoginPresenter(Application mApplication,LoginContact.View mLoginView) {
+        this.mLoginView = mLoginView;
         this.mApplication = mApplication;
     }
 
@@ -37,8 +40,7 @@ public abstract class AbstractLoginPresenter implements LoginContact.Presenter {
 
             mLoginParams.put(phoneNumKey, phoneNumValue);
             mLoginParams.put(passWordKey, passWordValue);
-
-
+            onLoginWithPassWord(mLoginParams);
         }
 
     }
@@ -68,5 +70,8 @@ public abstract class AbstractLoginPresenter implements LoginContact.Presenter {
 
     }
 
-
+    @Override
+    public LoginContact.View getView() {
+        return mLoginView;
+    }
 }

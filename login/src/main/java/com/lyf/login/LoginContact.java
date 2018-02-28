@@ -7,19 +7,22 @@ import android.support.annotation.Nullable;
 /**
  * @Author Lyf
  * @CreateTime 2018/2/27
- * @Description
+ * @Description A LoginContact defines two protocols for View and Presenter.
+ *  Protocols define and limit what View and Presenter can do.
  **/
 public class LoginContact {
 
-    public interface View extends BaseView<LoginContact.Presenter> {
+    public interface View {
 
         void showLoading();
 
         void hideLoading();
     }
 
-    public interface Presenter extends BasePresenter {
+    public interface Presenter  {
 
+
+        View getView();
 
         /**
          * login with phoneNum and passWord.
@@ -56,6 +59,13 @@ public class LoginContact {
          * @param params unKnow params. These params will do nothing for checking.
          */
         void onLoginWithUnKnowParams(String... params);
+
+        /*
+         * LifeCycle of Activity.
+         */
+        void subscribe();
+
+        void unSubscribe();
     }
 
 }

@@ -10,7 +10,8 @@ import com.lyf.login.util.PhoneUtil;
 /**
  * @Author Lyf
  * @CreateTime 2018/2/1
- * @Description Checking params, return true if the params are legal, return false if the params are illegal.
+ * @Description A LoginInterceptor class is a checking params interceptor.
+ *  return true if the params are legal, return false if the params are illegal.
  **/
 public class LoginInterceptor {
 
