@@ -32,6 +32,9 @@ public class BaseAppCaching {
         return mBaseAppCaching;
     }
 
+    /**
+     * Uses a default key "BaseAppCaching" to save a class object in SP.
+     */
     public <T> void saveAppCaching(T appCaching) {
         try {
             getSharedPreferences().edit().putString(this.getClass().getSimpleName(),
@@ -50,6 +53,9 @@ public class BaseAppCaching {
         }
     }
 
+    /**
+     * Uses a default key "BaseAppCaching" to get a object of T from SP.
+     */
     @Nullable
     public <T> T getAppCaching(Class<T> tClass) {
 
