@@ -153,7 +153,7 @@ public final class OkHttpManager implements IOkHttpManager {
                     // Get the raw json from server.
                     String json = response.body().string();
                     // Parse raw json into bean
-                    T bean = ParseUtil.parseJson(json, responseCallback.getClass());
+                    T bean = ParseUtil.parseInterfaceGenericJson(json, responseCallback.getClass());
                     // Save data.
                     result.setData(bean);
                 }

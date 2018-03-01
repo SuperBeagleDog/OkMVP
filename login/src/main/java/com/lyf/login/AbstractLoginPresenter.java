@@ -25,10 +25,11 @@ public abstract class AbstractLoginPresenter implements LoginContact.Presenter {
         this.mApplication = mApplication;
     }
 
+    // Three abstract methods which the subclass has to override them
+    // and posts a real request to remote server.
     public abstract void onLoginWithPassWord(@NonNull ArrayMap<String, Object> mLoginParams);
     public abstract void onLoginWithPlatforms(@NonNull ArrayMap<String, Object> mLoginParams);
     public abstract void onLoginWithVerifyCode(@NonNull ArrayMap<String, Object> mLoginParams);
-
 
     @Override
     public void onLoginWithPassWord(@NonNull String phoneNumKey, @NonNull String phoneNumValue,

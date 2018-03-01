@@ -16,11 +16,8 @@ public class GsonUtil implements IParseUtil {
     /**
      * Converts a json string into a T bean.
      */
-    public static <T> T convertJson2Bean(String json, Class tClass) {
-
-        return gson.fromJson(json, (((ParameterizedType)
-                (tClass.getClass().getGenericInterfaces())[0])
-                .getActualTypeArguments()[0]));
+    public static <T> T convertJson2Bean(String json, Class<T> tClass) {
+        return gson.fromJson(json, tClass);
     }
 
     /**
@@ -31,8 +28,15 @@ public class GsonUtil implements IParseUtil {
     }
 
     @Override
-    public <T> T parseJson(String json, Class tClass) {
+    public <T> T parseJson(String json,  Class<T> tClass) {
         return GsonUtil.convertJson2Bean(json, tClass);
+    }
+
+    @Override
+    public <T> T parseInterfaceGenericJson(String json,  Class tClass) {
+        return gson.fromJson(json, (((ParameterizedType)
+                (tClass.getClass().getGenericInterfaces())[0])
+                .getActualTypeArguments()[0]));
     }
 
     @Override

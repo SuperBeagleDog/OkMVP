@@ -10,7 +10,12 @@ public interface IParseUtil {
     /**
      * Converts a json string into a T bean.
      */
-     <T> T parseJson(String json, Class tClass);
+     <T> T parseJson(String json,  Class<T> tClass);
+
+    /**
+     * Converts a json string into a T bean. T should be a Interface generic type.
+     */
+     <T> T parseInterfaceGenericJson(String json,  Class tClass);
 
     /**
      * Converts an object into a string.
