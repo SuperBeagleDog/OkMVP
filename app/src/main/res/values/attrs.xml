@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="VerticalProgress">
+        <!-- 默认的背景颜色 -->
+        <attr name="background_color" format="color" />
+        <!-- 圆点的数量 -->
+        <attr name="point_count" format="integer" />
+        <!-- 当前到达的位置 -->
+        <attr name="current_point" format="integer" />
+        <!-- 起始颜色 -->
+        <attr name="start_color" format="color" />
+        <!-- 结束颜色 -->
+        <attr name="end_color" format="color" />
+        <!-- 圆点的半径 -->
+        <attr name="point_radius" format="dimension"/>
+    </declare-styleable>
+</resources>
