@@ -6,8 +6,12 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import framework.net.util.Util;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -120,43 +124,33 @@ public class TransformingOperations {
 
     /**
      * FlatMap() is different from Map(). It converts an observable into observables
-     * and each of them will emit their observables. Because each observable will emit their observables.
-     * So that they may will internal
+     * and each of them will emit their observables.
      */
     public static void actionFlatMap() {
 
         List<Integer> list = Arrays.asList(1, 2, 3);
 
+        // Uses lambda syntax here.
         Observable.fromIterable(list)
-                .flatMap(integer -> {
-                    // Converts integer into string.
-                    // Add a random delay time to fake a disorder printing.
-                    //int  delayTime= (int) (1 + Math.random() * 10);
-                    return Observable.just(String.valueOf(integer * 10));//.delay(delayTime, TimeUnit.MILLISECONDS);
-                }).take(4)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+                .concatMap(integer -> {
+                    log("Starting the " + integer + " task of circle list" + Utils.getThreadName());
+                    return getObservable(integer);
+                }).subscribe(s -> log("Finished the"+ Utils.getThreadName()));
 
-                    }
+    }
 
-                    @Override
-                    public void onNext(String s) {
+    private static Observable<String> getObservable(int integer) {
 
-                    }
+        return Observable.create((ObservableOnSubscribe<String>) emitter -> {
 
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
+            emitter.onNext("first task of the "+integer+"circle of list");
+            if(integer != 1) {
+                // Delay the second and third task.
+                Thread.sleep(5 * 1000);
+            }
+            emitter.onNext("second task of the "+integer+"circle of list");
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.newThread());
     }
 
     private static void log(String log) {

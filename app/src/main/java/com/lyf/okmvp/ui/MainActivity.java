@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity {
 
 //        ThreadManager.runOnUiThread(() ->
 //                toast("test"));
-        TransformingOperations.actionMap();
+        TransformingOperations.actionFlatMap();
 //
 //        Observable.interval(1, TimeUnit.MILLISECONDS)
 //                //.subscribeOn(Schedulers.newThread())

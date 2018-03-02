@@ -6,4 +6,14 @@ package framework.cache;
  * @Description
  **/
 public interface IUserInfo {
+
+    String getProfileName(String profileName);
+
+    void setProfileName();
+
+    String getProfilePhoto(String profilePhoto);
+
+    void setProfilePhoto();
+
+
 }
