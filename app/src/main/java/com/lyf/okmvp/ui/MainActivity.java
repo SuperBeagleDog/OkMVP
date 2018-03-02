@@ -2,6 +2,9 @@ package com.lyf.okmvp.ui;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import com.lyf.okmvp.R;
@@ -38,7 +41,7 @@ public class MainActivity extends BaseActivity {
 
 //        ThreadManager.runOnUiThread(() ->
 //                toast("test"));
-        TransformingOperations.actionFlatMap();
+        TransformingOperations.actionContactMap();
 //
 //        Observable.interval(1, TimeUnit.MILLISECONDS)
 //                //.subscribeOn(Schedulers.newThread())
@@ -53,6 +56,7 @@ public class MainActivity extends BaseActivity {
 //                    }
 //                    log("---->" + aLong);
 //                });
+
     }
 
     // 模仿事件积压

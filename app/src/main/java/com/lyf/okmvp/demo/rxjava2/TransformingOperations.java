@@ -132,25 +132,51 @@ public class TransformingOperations {
 
         // Uses lambda syntax here.
         Observable.fromIterable(list)
+                .flatMap(integer -> {
+                    log("Starting the " + integer + " task of circle list" + Utils.getThreadName());
+                    return getObservable(integer);
+                }).subscribe(s -> log("Finished the" + Utils.getThreadName()));
+
+    }
+
+    public static void actionContactMap() {
+
+        List<Integer> list = Arrays.asList(1, 2, 3);
+
+        // Uses lambda syntax here.
+        Observable.fromIterable(list)
                 .concatMap(integer -> {
                     log("Starting the " + integer + " task of circle list" + Utils.getThreadName());
                     return getObservable(integer);
-                }).subscribe(s -> log("Finished the"+ Utils.getThreadName()));
-
+                }).subscribe(s -> log("Finished the" + Utils.getThreadName()));
     }
+
+    public static void actionFlatMapIterable() {
+
+        List<Integer> list = Arrays.asList(1, 2, 3);
+
+        Observable.fromIterable(list)
+                .flatMapIterable(TransformingOperations::getList)
+                .subscribe(s -> log("accept=" + s));
+    }
+
 
     private static Observable<String> getObservable(int integer) {
 
         return Observable.create((ObservableOnSubscribe<String>) emitter -> {
 
-            emitter.onNext("first task of the "+integer+"circle of list");
-            if(integer != 1) {
+            emitter.onNext("first task of the " + integer + "circle of list");
+            if (integer != 1) {
                 // Delay the second and third task.
                 Thread.sleep(5 * 1000);
             }
-            emitter.onNext("second task of the "+integer+"circle of list");
+            emitter.onNext("second task of the " + integer + "circle of list");
             emitter.onComplete();
         }).subscribeOn(Schedulers.newThread());
+    }
+
+    private static List<String> getList(int integer) {
+        return Arrays.asList(String.valueOf("a" + integer), String.valueOf("b" + integer), String.valueOf("c" + integer));
     }
 
     private static void log(String log) {
