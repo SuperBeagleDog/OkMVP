@@ -20,13 +20,25 @@ public interface IHttpManager {
      * @param params A set of params which will be sent to remote server when a request is sent.
      * @param responseCallback<T> The response returned by remote server.
      */
-    <T> void doGet(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback);
+    <T> void doGet(@NonNull String tag, @NonNull String url,
+               @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback);
 
     /**
      * @param url  A uniform resource locator (URL) with a scheme of either {@code http} or {@code https}.
      * @param params A set of params which will be sent to remote server when a request is sent.
      * @param responseCallback<T> The response returned by remote server.
      */
-    <T> void doPost(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback);
+    <T> void doPost(@NonNull String tag, @NonNull String url,
+                   @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback);
 
+    /**
+     * Cancel requests by a tag.
+     * @param tag a tag indicates requests.
+     */
+    void cancelRequestWithTag(Object tag);
+
+    /**
+     * Cancel all requests
+     */
+    void cancelAllRequests();
 }

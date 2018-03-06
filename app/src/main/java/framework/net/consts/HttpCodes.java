@@ -17,4 +17,9 @@ public class HttpCodes {
      */
     public static int CODE_FAILURE = -1;
 
+    /**
+     *
+     */
+    public static int UNKONW_HTTP_ERROR = -100000;
+
 }

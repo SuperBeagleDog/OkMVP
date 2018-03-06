@@ -9,6 +9,8 @@ import com.lyf.okmvp.ui.BaseActivity;
 import framework.database.daos.UserDao;
 import framework.database.databases.UserDataBase;
 import framework.thread.ThreadManager;
+import framework.thread.interfaces.ObserverListener;
+import framework.thread.interfaces.SubscribeListener;
 
 /**
  * @Author Lyf
@@ -38,7 +40,6 @@ public class RoomDemoActivity extends BaseActivity {
         });
 
     }
-
 
 
 }

@@ -6,7 +6,8 @@ import android.support.v4.util.ArrayMap;
 
 import com.lyf.login.AbstractLoginPresenter;
 import com.lyf.login.LoginContact;
-import com.lyf.okmvp.model.login.PostLoginRequest;
+import com.lyf.okmvp.http.HttpUtils;
+import com.lyf.okmvp.model.login.LoginRequest;
 
 import framework.bean.BaseBean;
 import framework.net.response.Callback;
@@ -27,7 +28,7 @@ public class LoginPresenter extends AbstractLoginPresenter {
     @Override
     public void onLoginWithPassWord(@NonNull ArrayMap<String, Object> mLoginParams) {
 
-        PostLoginRequest.PostLogin(mLoginParams, new Callback<BaseBean>() {
+        LoginRequest.login(mLoginParams, new Callback<BaseBean>() {
             @Override
             public void onFailure(int errorCode, String errorMsg, Response<BaseBean> response) {
 
@@ -50,4 +51,17 @@ public class LoginPresenter extends AbstractLoginPresenter {
     public void onLoginWithVerifyCode(@NonNull ArrayMap<String, Object> mLoginParams) {
 
     }
+
+    @Override
+    public void subscribe() {
+        super.subscribe();
+
+    }
+
+    @Override
+    public void unSubscribe() {
+        super.unSubscribe();
+        HttpUtils.getInstance().cancelAllRequests();
+    }
+
 }

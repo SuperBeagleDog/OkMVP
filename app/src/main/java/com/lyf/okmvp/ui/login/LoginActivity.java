@@ -22,7 +22,9 @@ public class LoginActivity extends BaseActivity implements LoginContact.View {
 
         mPresenter = new LoginPresenter(getApplication(),this);
         onLoginClick();
-    } // fakes a login action.
+    }
+
+    // fakes a login action.
     private void onLoginClick() {
 
         // pass params to presenter which will check the params, and do login request if the params is valid.

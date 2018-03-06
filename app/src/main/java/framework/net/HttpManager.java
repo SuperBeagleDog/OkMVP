@@ -9,6 +9,9 @@ import framework.net.http.okHttp.OkHttpManager;
  * @CreateTime 2018/2/8
  * @Description A HttpManager class is in charge of Managing Http Framework.
  * Such as, sets some settings of http or decides to use which http library.
+ *
+ * Single responsibility principle：
+ * This class is simply for initializing Http's setting and getting an instance of class which enclosed the http library.
  **/
 public final class HttpManager {
 

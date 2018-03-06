@@ -14,14 +14,23 @@ import framework.net.response.Callback;
 public class RetrofitManager implements IRetrofitManager {
 
 
-
     @Override
-    public <T> void doGet(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
+    public <T> void doGet(@NonNull String tag, @NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
 
     }
 
     @Override
-    public <T> void doPost(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
+    public <T> void doPost(@NonNull String tag, @NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
+
+    }
+
+    @Override
+    public void cancelRequestWithTag(Object tag) {
+
+    }
+
+    @Override
+    public void cancelAllRequests() {
 
     }
 

@@ -14,7 +14,7 @@ import framework.net.response.Callback;
  * Note that: You may should rewrite the getSignParams() method to sign your params before doing request.
  * Return the original params if you don't need to sign your params.
  **/
-public abstract class BaseHttpUtil {
+public abstract class BaseHttpUtil implements IHttpManager {
 
     private IHttpManager mHttpManager = HttpManager.getHttpManager();
 
@@ -26,41 +26,43 @@ public abstract class BaseHttpUtil {
      */
     protected abstract ArrayMap<String, Object> getSignParams(ArrayMap<String, Object> params);
 
-    public <T> void doGet(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
-        mHttpManager.doGet(url, params, responseCallback);
+    @Override
+    public <T> void doGet(@NonNull String tag, @NonNull String url,
+                          @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
+        mHttpManager.doGet(tag, url, params, responseCallback);
     }
 
-    public <T> void doPost(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
-        mHttpManager.doPost(url, getSignParams(params), responseCallback);
+    @Override
+    public <T> void doPost(@NonNull String tag, @NonNull String url, @Nullable ArrayMap<String, Object> params,
+                           @Nullable Callback<T> responseCallback) {
+        mHttpManager.doPost(tag, url, getSignParams(params), responseCallback);
     }
 
     // These methods below do request without params and listen.
 
-    public void doGet(@NonNull String url) {
-        doGet(url, null, null);
+    /**
+     * This method uses url as a default tag.
+     */
+    public <T> void doGet(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
+        doGet(url, url, params, responseCallback);
     }
 
-    public void doPost(Object tag, String url) {
-        doPost(url, null, null);
+
+    /**
+     * This method uses url as a default tag.
+     */
+    public <T> void doPost(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
+        doPost(url, url, params, responseCallback);
     }
 
-    public void doPut(Object tag, String url) {
-
-    }
-
-    public void doDelete(Object tag, String url) {
-
-    }
-
-    // These methods below do request without params but with a listen.
-    public <T> void doGet(@NonNull String url, @Nullable Callback<T> responseCallback) {
-        doGet(url, null, responseCallback);
-    }
-
-    public <T> void doPost(@NonNull String url, @Nullable Callback<T> responseCallback) {
-    }
 
     public void cancelRequestWithTag(Object tag) {
-
+        mHttpManager.cancelAllRequests();
     }
+
+    @Override
+    public void cancelAllRequests() {
+        mHttpManager.cancelAllRequests();
+    }
+
 }

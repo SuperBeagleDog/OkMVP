@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity {
 
 //        ThreadManager.runOnUiThread(() ->
 //                toast("test"));
-        TransformingOperations.actionContactMap();
+        TransformingOperations.actionScan();
 //
 //        Observable.interval(1, TimeUnit.MILLISECONDS)
 //                //.subscribeOn(Schedulers.newThread())

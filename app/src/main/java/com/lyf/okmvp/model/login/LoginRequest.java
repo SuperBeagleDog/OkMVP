@@ -16,10 +16,9 @@ import framework.net.response.Response;
  * @CreateTime 2018/2/5
  * @Description
  **/
-public class PostLoginRequest {
+public class LoginRequest {
 
-    // login
-    public static void PostLogin(final ArrayMap<String, Object> params, final Callback<BaseBean> responseCallback) {
+    public static void login(final ArrayMap<String, Object> params, final Callback<BaseBean> responseCallback) {
 
 
         HttpUtils.getInstance().doPost(HttpUrlConst.POST_LOGIN_REQUEST, params, new Callback<BaseBean>() {
@@ -34,11 +33,11 @@ public class PostLoginRequest {
             }
         });
 
+        HttpUtils.getInstance().cancelRequestWithTag(HttpUrlConst.POST_LOGIN_REQUEST);
     }
 
-    // cancel login
-    public static void cancelLogin(){
-        HttpUtils.getInstance().cancelRequestWithTag(HttpUrlConst.POST_LOGIN_REQUEST);
+    public static void logout(final ArrayMap<String, Object> params, final Callback<BaseBean> responseCallback){
+
     }
 
 }

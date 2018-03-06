@@ -12,11 +12,14 @@ import framework.net.util.Util;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.observables.GroupedObservable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -160,16 +163,113 @@ public class TransformingOperations {
                 .subscribe(s -> log("accept=" + s));
     }
 
+    public static void actionSwitchMapWithinSameThreads() {
+
+        List<Integer> list = Arrays.asList(1, 2, 3, 4);
+
+        Observable.fromIterable(list)
+                .switchMap(new Function<Integer, ObservableSource<String>>() {
+
+                    @Override
+                    public ObservableSource<String> apply(Integer integer) throws Exception {
+                        return Observable.just("integer=" + integer);
+                    }
+                }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                log("accept=" + s + Utils.getThreadName());
+            }
+        });
+    }
+
+    public static void actionSwitchMapWithinDifferentThreads() {
+
+        List<Integer> list = Arrays.asList(1, 2, 3, 4);
+
+        Observable.fromIterable(list)
+                .switchMap(new Function<Integer, ObservableSource<String>>() {
+
+                    @Override
+                    public ObservableSource<String> apply(Integer integer) throws Exception {
+                        return Observable.just("integer=" + integer).subscribeOn(Schedulers.newThread());
+                    }
+                }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                log("accept=" + s + Utils.getThreadName());
+            }
+        });
+    }
+
+    public static void actionScan() {
+
+        // Scan() without initialValue parameter.
+//        Observable.just(1,2,3,4).scan(new BiFunction<Integer, Integer, Integer>() {
+//            @Override
+//            public Integer apply(Integer integer, Integer integer2) throws Exception {
+//                log("apply="+integer+","+integer2);
+//                return integer*integer2;
+//            }
+//        }).subscribe(new Consumer<Integer>() {
+//            @Override
+//            public void accept(Integer integer) throws Exception {
+//                log("accept="+integer);
+//            }
+//        });
+
+        // Scan() with initialValue as it's first parameter.
+        Observable.just(1, 2, 3, 4).scan(5, new BiFunction<Integer, Integer, Integer>() {
+            @Override
+            public Integer apply(Integer integer, Integer integer2) throws Exception {
+                log("apply=" + integer + "," + integer2);
+                return integer * integer2;
+            }
+        }).subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                log("accept=" + integer);
+            }
+        });
+
+    }
+
+    public static void actionGrougBy() {
+
+        // 分割一组任务：将一组任务分割成几段，然后，依次执行。
+        // 分成几组由apply方法的返回值决定。apply方法，返回多少个不同的值，则有多少段任务。
+        Observable.range(0, 10).groupBy(new Function<Integer, String>() {
+            @Override
+            public String apply(Integer integer) throws Exception {
+                log("apply=" + integer + ",sum=" + (integer / 4));
+                if (integer < 5) {
+                    return "test1";
+                }
+                return "test2";
+            }
+        }).subscribe(new Consumer<GroupedObservable<String, Integer>>() {
+            @Override
+            public void accept(GroupedObservable<String, Integer> groupedObservable) throws Exception {
+
+                log("................getKey=" + groupedObservable.getKey());
+                groupedObservable.subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        log("accept=" + integer);
+                    }
+                });
+            }
+        });
+    }
 
     private static Observable<String> getObservable(int integer) {
 
         return Observable.create((ObservableOnSubscribe<String>) emitter -> {
 
             emitter.onNext("first task of the " + integer + "circle of list");
-            if (integer != 1) {
-                // Delay the second and third task.
-                Thread.sleep(5 * 1000);
-            }
+//            if (integer == 2) {
+//                // Delay the second and third task.
+//                Thread.sleep(5 * 1000);
+//            }
             emitter.onNext("second task of the " + integer + "circle of list");
             emitter.onComplete();
         }).subscribeOn(Schedulers.newThread());

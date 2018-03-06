@@ -58,12 +58,12 @@ public final class OkHttpManager implements IOkHttpManager {
     }
 
     @Override
-    public <T> void doGet(@NonNull String url, @Nullable ArrayMap<String, Object> params, final @Nullable Callback<T> responseCallback) {
+    public <T> void doGet(@NonNull String tag, @NonNull String url, @Nullable ArrayMap<String, Object> params, final @Nullable Callback<T> responseCallback) {
 
         // Creates a basic request
         final Request request = new Request
                 .Builder()
-                .tag(url)
+                .tag(tag)
                 .headers(getOkHttpHeaders(mHeaderManager.getHeaders()))
                 .url(Util.composeParams(url, params))
                 .build();
@@ -72,17 +72,33 @@ public final class OkHttpManager implements IOkHttpManager {
     }
 
     @Override
-    public <T> void doPost(@NonNull String url, @Nullable ArrayMap<String, Object> params, @Nullable Callback<T> responseCallback) {
+    public <T> void doPost(@NonNull String tag, @NonNull String url, @Nullable ArrayMap<String, Object> params,
+                           @Nullable Callback<T> responseCallback) {
 
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                 ParseUtil.toJson(params));
 
         Request request = new Request.Builder()
                 .url(url)
+                .tag(tag)
                 .post(body)
                 .build();
 
         handleNetTask(request, responseCallback);
+    }
+
+    @Override
+    public void cancelAllRequests() {
+        if (mOkHttpClient != null){
+
+            for (Call call : mOkHttpClient.dispatcher().queuedCalls()) {
+                call.cancel();
+            }
+
+            for (Call call : mOkHttpClient.dispatcher().runningCalls()) {
+                call.cancel();
+            }
+        }
     }
 
     @Override
@@ -123,6 +139,7 @@ public final class OkHttpManager implements IOkHttpManager {
     }
 
     private <T> void handleNetTask(Request request, Callback<T> responseCallback) {
+
 
         mOkHttpClient.newCall(request)
                 .enqueue(new okhttp3.Callback() {

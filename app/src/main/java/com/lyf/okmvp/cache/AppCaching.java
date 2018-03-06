@@ -26,6 +26,7 @@ public class AppCaching extends BaseAppCaching {
     }
 
     public static ISystemConfig getSystemConfig() {
+        ISystemConfig tes = new SystemConfig();
         return getAppCaching().getAppCaching(ISystemConfig.class);
     }
 

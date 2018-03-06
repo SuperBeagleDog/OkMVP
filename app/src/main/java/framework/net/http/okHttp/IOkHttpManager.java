@@ -2,6 +2,8 @@ package framework.net.http.okHttp;
 
 import android.support.v4.util.ArrayMap;
 
+import java.util.List;
+
 import framework.net.http.IHttpManager;
 import okhttp3.Headers;
 import okhttp3.Request;
@@ -15,11 +17,6 @@ import okhttp3.Request;
  **/
 public interface IOkHttpManager extends IHttpManager{
 
-    /**
-     * Cancel requests by a tag.
-     * @param tag a tag indicates requests.
-     */
-    void cancelRequestWithTag(Object tag);
 
     /**
      * Transfers the original headers(Map<String, String> type) to OkHttp's headers.
@@ -28,7 +25,6 @@ public interface IOkHttpManager extends IHttpManager{
      * @return Headers.
      */
     Headers getOkHttpHeaders(ArrayMap<String, String> originalHeaders);
-
 
 //    /**
 //     *
