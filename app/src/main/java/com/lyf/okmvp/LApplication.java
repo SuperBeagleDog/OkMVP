@@ -14,9 +14,13 @@ import framework.net.HttpManager;
  **/
 public class LApplication extends Application {
 
+    public static Application INSTANCE;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        INSTANCE = this;
 
         HttpManager.initHttpManager(new HttpBuilder()
                 .setCodeSuccess(0)

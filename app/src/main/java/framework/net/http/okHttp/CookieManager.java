@@ -2,6 +2,7 @@ package framework.net.http.okHttp;
 
 import android.util.ArrayMap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Cookie;
@@ -43,7 +44,11 @@ public class CookieManager implements CookieJar {
 
     @Override
     public List<Cookie> loadForRequest(HttpUrl url) {
-        return mCookieArray.get(url);
+        List<Cookie> cookieList = mCookieArray.get(url);
+        if(cookieList != null) {
+            return cookieList;
+        }
+        return new ArrayList<>();
     }
 
 }

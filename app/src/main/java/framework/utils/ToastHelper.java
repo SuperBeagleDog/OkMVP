@@ -1,6 +1,8 @@
 package framework.utils;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 /**
@@ -10,10 +12,17 @@ import android.widget.Toast;
  **/
 public class ToastHelper {
 
-    public void toast(Context context, String text){
+    public static void toast(Context context, String text){
 
+        Handler handler = new Handler(Looper.getMainLooper());
         if(context != null) {
-            Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
     }
 

@@ -8,6 +8,7 @@ import com.lyf.okmvp.ui.BaseActivity;
 
 import framework.database.daos.UserDao;
 import framework.database.databases.UserDataBase;
+import framework.database.entities.UserInfo;
 import framework.thread.ThreadManager;
 import framework.thread.interfaces.ObserverListener;
 import framework.thread.interfaces.SubscribeListener;
@@ -24,22 +25,27 @@ public class RoomDemoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
 
-        ThreadManager.execute(() -> {
-            // Do something on subThread and then return the T bean.
-            UserDao userDao = UserDataBase.getInstance(RoomDemoActivity.this).getUserDao();
-            // query a user
-            return userDao.getUserInfoViaId(100);
-        }, userInfo -> {
-            // Do something on UiThread with UserInfo class.
-            if (userInfo == null) {
-                Toast.makeText(RoomDemoActivity.this, "query failed!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(RoomDemoActivity.this, "userName=" + userInfo.getFirstName() + userInfo.getLastName(),
-                        Toast.LENGTH_SHORT).show();
+        ThreadManager.execute(new SubscribeListener<UserInfo>() {
+            @Override
+            public UserInfo runOnSubThread() throws Exception {
+                // Do something on subThread and then return the T bean.
+                UserDao userDao = UserDataBase.getInstance(RoomDemoActivity.this).getUserDao();
+                // query a user
+                return userDao.getUserInfoViaId(100);
+            }
+        }, new ObserverListener<UserInfo>() {
+            @Override
+            public void runOnUiThread(@Nullable UserInfo userInfo) {
+                // Do something on UiThread with UserInfo class.
+                if (userInfo == null) {
+                    Toast.makeText(RoomDemoActivity.this, "query failed!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RoomDemoActivity.this, "userName=" + userInfo.getFirstName() + userInfo.getLastName(),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
     }
-
 
 }

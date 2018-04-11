@@ -1,5 +1,8 @@
 package framework.mvp.model.get;
 
+import com.lyf.okmvp.http.HttpUrlConst;
+import com.lyf.okmvp.http.HttpUtils;
+
 import framework.bean.BaseBean;
 import framework.net.response.Callback;
 
@@ -16,7 +19,7 @@ public class GetAppRequest {
     public static void getAppConfig(final Callback<BaseBean> responseCallback) {
 
 
-//        HttpUtils.getInstance().doGet(HttpUrlConst.GET_APP_CONFIGS,responseCallback);
+        HttpUtils.getInstance().doGet(HttpUrlConst.GET_APP_CONFIGS,null,responseCallback);
 
     }
 

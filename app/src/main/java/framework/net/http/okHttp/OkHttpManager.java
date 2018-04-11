@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 
+import com.lyf.okmvp.http.LogInterceptor;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -37,7 +39,7 @@ public final class OkHttpManager implements IOkHttpManager {
     private static Headers mOkHttpHeaders;
 
     // It's better to use a single instance of OkHttpClient in a certain project.
-    private final OkHttpClient mOkHttpClient = new OkHttpClient();
+    private final OkHttpClient mOkHttpClient;
 
     // Manager Headers.
     private IHeaderManager mHeaderManager = HeaderManager.getHeaderManager();
@@ -45,16 +47,19 @@ public final class OkHttpManager implements IOkHttpManager {
     // Sets some settings of http to OkHttpClient with a HttpBuilder.
     public OkHttpManager(HttpBuilder httpBuilder) {
 
-        OkHttpClient.Builder okHttpBuilder = mOkHttpClient.newBuilder();
-        okHttpBuilder.readTimeout(httpBuilder.getReadTimeOut(), TimeUnit.MILLISECONDS)
+        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();
+
+        okHttpBuilder.addInterceptor(new LogInterceptor())
+                .readTimeout(httpBuilder.getReadTimeOut(), TimeUnit.MILLISECONDS)
                 .writeTimeout(httpBuilder.getWriteTimeOut(), TimeUnit.MILLISECONDS)
                 .connectTimeout(httpBuilder.getConnectTimeOut(), TimeUnit.MILLISECONDS)
                 .cookieJar(CookieManager.getCookieManager());
+
         // Add ssl.
         // HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
         // okHttpBuilder.sslSocketFactory(sslParams.sSLSocketFactory,sslParams.trustManager);
 
-        okHttpBuilder.build();
+        mOkHttpClient = okHttpBuilder.build();
     }
 
     @Override

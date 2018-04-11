@@ -1,6 +1,7 @@
 package com.lyf.okmvp.ui;
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import com.lyf.okmvp.R;
 import com.lyf.okmvp.demo.rxjava2.RxJava2Demo;
 import com.lyf.okmvp.demo.rxjava2.TransformingOperations;
+import com.lyf.okmvp.http.HttpUtils;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -39,9 +41,16 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        try {
+            doNetWorkTest();
+        } catch (Exception e) {
+            LogUtil.log("Main=" + e.toString());
+        }
+
+
 //        ThreadManager.runOnUiThread(() ->
 //                toast("test"));
-        TransformingOperations.actionScan();
+//        TransformingOperations.actionScan();
 //
 //        Observable.interval(1, TimeUnit.MILLISECONDS)
 //                //.subscribeOn(Schedulers.newThread())
