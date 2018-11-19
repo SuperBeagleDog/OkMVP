@@ -11,7 +11,7 @@ import framework.utils.parse.ParseUtil;
 /**
  * @Author Lyf
  * @CreateTime 2018/3/1
- * @Description An BaseAppCaching class is caching data of app in SharePreference.
+ * @Description A BaseAppCaching class is caching data of app in SharePreference.
  *  data will be encrypted with Base64 when it cached in SP
  *  and decrypted with Base64 when it got from SP.
  **/
