@@ -12,6 +12,7 @@ import com.lyf.okmvp.R;
 import com.lyf.okmvp.demo.rxjava2.RxJava2Demo;
 import com.lyf.okmvp.demo.rxjava2.TransformingOperations;
 import com.lyf.okmvp.http.HttpUtils;
+import com.lyf.okmvp.widget.TimerView;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -40,6 +41,18 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /**
+         * change differ layouts to see differ custom widgets.
+         */
+
+        // haloView
+       // setContentView(R.layout.activity_halo_layout);
+
+  //      setContentView(R.layout.activity_timer_layout);
+        // Click TimeView to start counting time.
+//        TimerView timerView = findViewById(R.id.timerView);
+//        timerView.setOnClickListener(v-> timerView.startCount());
 
         try {
             doNetWorkTest();
